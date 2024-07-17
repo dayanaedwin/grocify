@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
         type: [String],
         default: ['user'], // Other roles can be 'admin', 'vendor'.
     },
-    addresse: {
+    address: {
         street: String,
         city: String,
         state: String,

@@ -13,10 +13,7 @@ const URL = process.env.MONGODB_CONNECTION_URL;
 app.use(express.json());
 app.use(bodyParser.json());
 
-mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(response => {
+mongoose.connect(URL).then(response => {
     console.log("Successfully connected to Mongo DB");
     app.listen(PORT, () => {
         console.log(`App running in port ${PORT}`);
