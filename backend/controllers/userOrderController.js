@@ -5,11 +5,21 @@ const mongoose = require('mongoose');
 exports.getMyOrders = async (req, res) => {
     try {
         const userId = req.userId;
-        const orders = await Order.find({ userId });
+        const orders = await Order.find({ userId }).populate('products.productId', 'name description images price uom currency rating category stock seller').lean();
         if (!orders || orders.length < 1) {
             return res.status(404).json({ error: 'Order not found' });
         }
-        res.status(200).json({ data: orders });
+        const formattedOrders = orders.map(order =>
+            order.products.map(product => {
+                return {
+                    quantity: product.quantity,
+                    price: product.price,
+                    currency: product.currency,
+                    productDetails: product.productId
+                }
+            })
+        );
+        res.status(200).json({ data: formattedOrders });
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -19,11 +29,22 @@ exports.getMyOrderById = async (req, res) => {
     try {
         const userId = req.userId;
         const orderId = req.params.id;
-        const orders = await Order.find({ _id: orderId, userId });
+        let orders = await Order.findOne({ _id: orderId, userId }).populate('products.productId', 'name description images price uom currency rating category stock seller').lean();;
         if (!orders || orders.length < 1) {
             return res.status(404).json({ error: 'Order not found' });
         }
-        res.status(200).json({ data: orders });
+        const formattedOrders = {
+            ...orders,
+            products: orders.products.map(product => {
+                return {
+                    quantity: product.quantity,
+                    price: product.price,
+                    currency: product.currency,
+                    productDetails: product.productId
+                }
+            })
+        };
+        res.status(200).json({ data: formattedOrders });
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
