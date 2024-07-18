@@ -3,10 +3,10 @@ const route = express.Router();
 
 const userRoute = require('./userRoute');
 const productRoute = require('./productRoute');
-// const orderRoute = require('./orderRoute');
+const userOrderRoute = require('./userOrderRoute');
 
 route.use('/user', userRoute);
 route.use('/product', productRoute);
-// route.use('/order', orderRoute);
+route.use('/my-order', userOrderRoute);
 
 module.exports = route;
