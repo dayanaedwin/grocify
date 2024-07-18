@@ -7,4 +7,10 @@ const controller = require('../controllers/userOrderController');
 route.get('/', auth, controller.getMyOrders);
 route.get('/:id', auth, controller.getMyOrderById);
 
+route.post('/', auth, controller.createUserOrder);
+// route.put('/:id', auth, controller.updateUserOrder); // this will also include cancel order
+// route.delete('/:id', auth, controller.deleteUserOrder);
+
+// route.get('/filter', auth, controller.filterUserOrders);
+
 module.exports = route;

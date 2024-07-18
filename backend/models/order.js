@@ -8,7 +8,7 @@ const OrderSchema = new mongoose.Schema({
     },
     products: [
         {
-            product: {
+            productId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Product',
                 required: true,
@@ -17,7 +17,15 @@ const OrderSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
                 min: 1
-            }
+            },
+            price: {
+                type: Number,
+                required: true,
+            },
+            currency: {
+                type: String,
+                required: true
+            },
         }
     ],
     totalPrice: {
@@ -25,7 +33,7 @@ const OrderSchema = new mongoose.Schema({
         required: true,
         min: 0
     },
-    status: {
+    orderStatus: {
         type: String,
         required: true,
         enum: ['pending', 'processing', 'shipped', 'delivered'],
