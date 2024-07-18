@@ -56,10 +56,10 @@ exports.createUserOrder = async (req, res) => {
                 await session.abortTransaction();
                 return res.status(400).json({ error: `Insufficient stock for product: ${productInDB.name}` });
             }
-            if (productInDB.price !== product.price) {
-                await session.abortTransaction();
-                return res.status(400).json({ error: `Price mismatch for product: ${productInDB.name}` });
-            }
+
+            product.price = productInDB.price;
+            product.currency = productInDB.currency;
+
             productInDB.stock -= product.quantity;
             await productInDB.save({ session });
         }
@@ -75,7 +75,7 @@ exports.createUserOrder = async (req, res) => {
         }
 
         await session.commitTransaction();
-        res.status(200).json({ data: createdOrder });
+        res.status(200).json({ message: 'Order created successfully' });
 
     } catch (error) {
         await session.abortTransaction();
