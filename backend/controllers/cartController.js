@@ -17,7 +17,7 @@ exports.getCartItems = async (req, res) => {
                 productDetails: item.productId,
                 quantity: item.quantity,
                 createdAt: item.createdAt,
-                updatedAt: item.updatedAt,                
+                updatedAt: item.updatedAt,
             }
         });
 
@@ -64,10 +64,56 @@ exports.addToCart = async (req, res) => {
         await session.commitTransaction();
         res.status(200).json({ message: 'Items added to the cart' });
     } catch (error) {
-        console.log(error);
         await session.abortTransaction();
         res.status(500).json({ error: 'Failed to add items to cart' });
     } finally {
         session.endSession();
+    }
+}
+
+exports.updateCartItem = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { id, quantity } = req.body;
+
+        if (!quantity || quantity < 0) {
+            return res.status(400).json({ error: 'Quantity is invalid or negative' });
+        }
+
+        const cartItem = await Cart.findOne({ userId, _id: id });
+
+        if (!cartItem) {
+            return res.status(404).json({ error: 'Cart item not found' })
+        }
+
+        if (quantity === 0) { // If the quantity is 0, remove the item from the cart        
+            await Cart.deleteOne({ _id: id });
+            return res.status(200).json({ message: 'Cart item removed' });
+        } else {
+            cartItem.quantity = quantity;
+            await Cart.updateOne({ _id: id }, { $set: cartItem });
+            return res.status(200).json({ message: 'Cart item updated successfully' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update the cart' });
+    }
+}
+
+exports.deleteCartItem = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const id = req.params.id;
+
+        const cartItem = await Cart.findOne({ userId, _id: id });
+
+        if (!cartItem) {
+            return res.status(404).json({ error: 'Cart item not found' });
+        }
+
+        await Cart.deleteOne({ _id: id });
+
+        res.status(200).json({ message: 'Cart item removed' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete the cart item' });
     }
 }
