@@ -1,5 +1,4 @@
-const { Order } = require('../models');
-const { Product } = require('../models');
+const { Product, Order } = require('../models');
 const mongoose = require('mongoose');
 
 exports.getMyOrders = async (req, res) => {
@@ -143,5 +142,4 @@ exports.updateUserOrder = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Failed to update the order details' });
     }
-
 }
