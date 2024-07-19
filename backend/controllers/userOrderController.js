@@ -6,9 +6,11 @@ exports.getMyOrders = async (req, res) => {
     try {
         const userId = req.userId;
         const orders = await Order.find({ userId }).populate('products.productId', 'name description images price uom currency rating category stock seller').lean();
+
         if (!orders || orders.length < 1) {
             return res.status(404).json({ error: 'Order not found' });
         }
+
         const formattedOrders = orders.map(order =>
             order.products.map(product => {
                 return {
@@ -29,10 +31,12 @@ exports.getMyOrderById = async (req, res) => {
     try {
         const userId = req.userId;
         const orderId = req.params.id;
-        let orders = await Order.findOne({ _id: orderId, userId }).populate('products.productId', 'name description images price uom currency rating category stock seller').lean();;
+        const orders = await Order.findOne({ _id: orderId, userId }).populate('products.productId', 'name description images price uom currency rating category stock seller').lean();;
+
         if (!orders || orders.length < 1) {
             return res.status(404).json({ error: 'Order not found' });
         }
+
         const formattedOrders = {
             ...orders,
             products: orders.products.map(product => {
@@ -104,4 +108,40 @@ exports.createUserOrder = async (req, res) => {
     } finally {
         session.endSession();
     }
+}
+
+exports.updateUserOrder = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const orderId = req.params.orderId;
+        const { deliveryAddress, orderStatus } = req.body;
+
+        const order = await Order.findOne({ _id: orderId, userId });
+
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found or does not belong to this user' });
+        }
+
+        // Check the status of the order to determine what can be updated
+        if (['shipped', 'delivered', 'cancelled'].includes(order.status)) {
+            return res.status(400).json({ error: `Order cannot be updated in its current status: ${order.status}` });
+        }
+
+        //Update the delivery address based on the order status
+        if (deliveryAddress && ['pending', 'processing'].includes(order.status)) {
+            order.deliveryAddress = deliveryAddress;
+        }
+
+        // Handle cancellation
+        if (orderStatus && orderStatus === 'cancelled' && !['shipped', 'delivered', 'cancelled'].includes(order.status)) {
+            order.status = 'cancelled';
+        }
+
+        await Order.updateOne({ _id: order._id }, { $set: order });
+
+        res.status(200).json({ message: 'Order updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update the order details' });
+    }
+
 }
