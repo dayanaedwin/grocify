@@ -10,7 +10,8 @@ dotenv.config();
 const PORT = process.env.PORT;
 const URL = process.env.MONGODB_CONNECTION_URL;
 
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 app.use(bodyParser.json());
 
 mongoose.connect(URL).then(response => {
