@@ -3,15 +3,16 @@ import React from 'react';
 interface BodyProps {
     children?: React.ReactNode;
     className?: string;
-    color?: 'primary' | 'secondary' | 'tertiary';
+    color?: 'primary' | 'secondary' | 'black' | 'danger';
     size?: 'small' | 'medium' | 'large';
 }
 
 export const Body: React.FC<BodyProps> = ({ children, className = '', color = 'primary', size = 'medium' }) => {
     const colorClasses = {
-        primary: 'text-textPrimary',
+        primary: 'text-primary',
         secondary: 'text-white',
-        tertiary: 'text-black',
+        black: 'text-black',        
+        danger: 'text-red-700'
     };
 
     const sizeClasses = {

@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Button, Heading, Body } from '../components/elements';
+import { RouteConstants } from '../constants';
+import { Link } from 'react-router-dom';
 
 interface IFormValues {
 	email_id: string;
@@ -11,7 +13,6 @@ interface IFormValues {
 }
 
 export const Login = () => {
-	const [isVisible, setIsVisible] = useState(false);
 
 	const validationSchema = Yup.object().shape({
 		email_id: Yup.string()
@@ -24,17 +25,15 @@ export const Login = () => {
 
 	const { handleSubmit, register, formState } = useForm({
 		resolver: yupResolver(validationSchema),
+		reValidateMode: 'onChange',
 	});
 	const { errors, isSubmitting, isValid } = formState;
 
 	const onSubmit = async (values: IFormValues) => {
+		console.log(errors.email_id, errors.password)
 		if (Object.values(errors).length > 0) {
 			return;
 		}
-	}
-
-	const toggleVisibility = () => {
-		setIsVisible(!isVisible);
 	}
 
 	return (
@@ -47,40 +46,36 @@ export const Login = () => {
 				</div>
 			</div>
 			<div className='flex-1 flex flex-col justify-center items-center p-6 md:p-12'>
-				<h2 className='text-3xl font-bold mb-6 text-gray-500'>Welcome to grocify</h2>
+				<Heading level={1} color='primary' className='text-3xl font-bold mb-4'>Login</Heading>
+
 				<form className='w-full max-w-sm space-y-4' onSubmit={handleSubmit(onSubmit)}>
 					<div>
-						<Heading level={1} color='secondary' className='block text-sm font-medium text-gray-700'>Email</Heading>
+						<Heading level={1} color='black' className='block text-sm font-medium text-gray-700'>Email</Heading>
 						<input
 							{...register("email_id")}
 							type='email'
 							placeholder='Enter your email'
-							className='mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary'
+							className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-black'
 						/>
 						{errors?.email_id?.message
-							&& <Body
-							>
+							&& <Body color='danger' className='text-sm'>
 								{errors?.email_id?.message}
 							</Body>
 						}
 					</div>
 
 					<div>
-						<Heading level={1} color='secondary' className='block text-sm font-medium text-gray-700'>Password</Heading>
+						<Heading level={1} color='black' className='block text-sm font-medium text-gray-700'>Password</Heading>
 						<input
 							{...register("password")}
 							type='password'
 							id='password'
 							placeholder='Enter your password'
-							className='mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary'
+							className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-black'
 						/>
 						{errors?.password?.message
-							&& <Body
-								color='secondary'
-							>
+							&& <Body color='danger' className='text-sm'>
 								{errors?.password?.message}
-								{isVisible ? <FaEye className="fs-22" /> : <FaEyeSlash className="fs-22" />}
-
 							</Body>
 						}
 					</div>
@@ -89,18 +84,15 @@ export const Login = () => {
 						type='submit'
 						variant='primary'
 						size='medium'
-						className='w-full'
+						className='w-full cursor-pointer'
 						disabled={!isValid}
 					>
-						{isSubmitting
-							&& <Body
-								className='spinner'
-							>
-							</Body>
-						}
-						Submit
+						Login
 					</Button>
 				</form>
+				<Body color='black' className='text-sm mt-2'>Don't have an account?
+					<Link to={RouteConstants.login} className='text-blue-700'> Click here to sign up</Link>
+				</Body>
 			</div>
 		</div>
 	);

@@ -22,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
     const baseStyles = 'font-semibold py-2 px-4 rounded focus:outline-none focus:ring';
 
     const variantStyles = {
-        primary: 'bg-primary text-white hover:bg-green-700 focus:ring-primary',
+        primary: 'bg-primary text-white border hover:bg-white hover:text-primary hover:border-primary focus:ring-1 focus:ring-primary',
         secondary: 'bg-white text-primary hover:bg-gray-200 focus:ring-white',
     };
 

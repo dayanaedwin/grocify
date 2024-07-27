@@ -2,7 +2,7 @@ interface HeadingProps {
     level: 1 | 2 | 3 | 4 | 5 | 6;
     children: React.ReactNode;
     className?: string;
-    color?: 'primary' | 'secondary' | 'tertiary';
+    color?: 'primary' | 'secondary' | 'black';
 }
 
 export const Heading: React.FC<HeadingProps> = ({ level, children, className = '', color = 'primary' }) => {
@@ -11,7 +11,7 @@ export const Heading: React.FC<HeadingProps> = ({ level, children, className = '
     const colorClasses = {
         primary: 'text-primary',
         secondary: 'text-white',
-        tertiary: 'text-black',
+        black: 'text-black',
     };
 
     return (
