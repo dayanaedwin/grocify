@@ -22,7 +22,7 @@ const App = () => {
 }
 
 const ProtectedRoutes = () => {
-	const auth = { token: false }
+	const auth = { token: true }
 	return (auth && auth.token) ? <Outlet /> : <Navigate to={RouteConstants.login} />
 }
 

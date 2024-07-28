@@ -3,8 +3,8 @@ interface ButtonProps {
     onClick?: () => void;
     children: React.ReactNode;
     className?: string;
-    variant?: 'primary' | 'secondary'; // Add variants if needed
-    size?: 'small' | 'medium' | 'large'; // Add size options if needed
+    variant?: 'primary' | 'secondary' | 'transparent';
+    size?: 'small' | 'medium' | 'large';
     type?: 'button' | 'submit' | 'reset',
     disabled?: true | false
 }
@@ -19,11 +19,12 @@ export const Button: React.FC<ButtonProps> = ({
     disabled
 }) => {
 
-    const baseStyles = 'font-semibold py-2 px-4 rounded focus:outline-none focus:ring';
+    const baseStyles = 'w-full font-semibold py-2 rounded focus:outline-none focus:ring cursor-pointer';
 
     const variantStyles = {
         primary: 'bg-primary text-white border hover:bg-white hover:text-primary hover:border-primary focus:ring-1 focus:ring-primary',
         secondary: 'bg-white text-primary hover:bg-gray-200 focus:ring-white',
+        transparent: 'bg-white text-black hover:bg-gray-200 focus:ring-white',
     };
 
     const sizeStyles = {

@@ -2,8 +2,6 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Button, Heading, Body } from '../components/elements';
 import { Link } from 'react-router-dom';
 import { RouteConstants } from '../constants';
 
@@ -42,84 +40,64 @@ export const SignUp = () => {
         <div className='flex min-h-screen'>
             <div className='hidden md:flex flex-1 bg-green-700 text-white justify-center items-center p-10'>
                 <div className='text-center'>
-                    <Heading level={1} color='secondary' className='text-4xl font-bold mb-4'><i>grocify</i></Heading>
-                    <Body color='secondary' size='small' className='mb-4'><i>Freshness on the go!</i></Body>
-                    <Body color='secondary' className='text-sm'>grocify offers the best selection of fresh produce, meats, and everyday essentials. Discover more and enjoy shopping like never before!</Body>
+                    <h1 className='text-4xl text-white font-bold mb-4'><i>grocify</i></h1>
+                    <p className='text-white text-sm mb-4'><i>Freshness on the go!</i></p>
+                    <p className='text-white text-sm'>grocify offers the best selection of fresh produce, meats, and everyday essentials. Discover more and enjoy shopping like never before!</p>
                 </div>
             </div>
             <div className='flex-1 flex flex-col justify-center items-center p-6 md:p-12'>
-                <Heading level={2} color='primary' className='text-3xl font-bold mb-4'>Sign Up</Heading>
+                <h1 className='text-3xl text-primary font-bold mb-4'>Sign Up</h1>
                 <form className='w-full max-w-sm space-y-4' onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        <Heading level={1} color='black' className='block text-sm font-medium text-gray-700'>Name</Heading>
+                        <h1 className='text-sm text-black font-medium'>Name</h1>
                         <input
                             {...register("name")}
                             placeholder='Enter your name'
-                            className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-black'
+							className='w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-700'
                         />
                         {errors?.name?.message
-                            && <Body
-                                color='secondary'
-                            >
-                                {errors?.name?.message}
-                            </Body>
+                            && <p className='text-red-700 text-sm'>{errors?.name?.message}</p>
                         }
                     </div>
 
                     <div>
-                        <Heading level={1} color='black' className='block text-sm font-medium text-gray-700'>Email</Heading>
+                        <h1 className='text-sm text-black font-medium'>Email</h1>
                         <input
                             {...register("email_id")}
                             type='email'
                             placeholder='Enter your email'
-                            className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-black'
+							className='w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-700'
                         />
                         {errors?.email_id?.message
-                            && <Body
-                            >
-                                {errors?.email_id?.message}
-                            </Body>
+                            && <p className='text-red-700 text-sm'>{errors?.email_id?.message}</p>
                         }
                     </div>
 
                     <div>
-                        <Heading level={1} color='black' className='block text-sm font-medium text-gray-700'>Password</Heading>
+                        <h1 className='text-sm text-black font-medium'>Password</h1>
                         <input
                             {...register("password")}
                             type='password'
                             id='password'
                             placeholder='Enter your password'
-                            className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-black'
+							className='w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-700'
                         />
                         {errors?.password?.message
-                            && <Body
-                                color='secondary'
-                            >
-                                {errors?.password?.message}
-
-                            </Body>
+                            && <p className='text-red-700 text-sm'>{errors?.password?.message}</p>
                         }
                     </div>
-
-                    <Button
+                    <button
                         type='submit'
-                        variant='primary'
-                        size='medium'
-                        className='w-full'
                         disabled={!isValid}
+						className='w-full py-2 my-2 font-semibold text-base bg-primary text-white border rounded cursor-pointer focus:outline-none hover:bg-white hover:text-primary hover:border-primary focus:ring focus:ring-black'
+
                     >
-                        {isSubmitting
-                            && <Body
-                                className='spinner'
-                            >
-                            </Body>
-                        }
-                        Sign up
-                    </Button>
+                        Sign Up
+                    </button>
                 </form>
-                <Body color='black' className='text-sm mt-2'>Already have an account?
+                <p className='text-black text-sm mt-2'>Already have an account?
                     <Link to={RouteConstants.login} className='text-blue-700'> Click here to login</Link>
-                </Body>
+                </p>
             </div>
         </div>
     );
