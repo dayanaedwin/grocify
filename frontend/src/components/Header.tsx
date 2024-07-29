@@ -3,7 +3,7 @@ import { TiArrowSortedDown } from "react-icons/ti";
 
 export const Header = () => {
     return (
-        <header className="bg-white py-6 px-10">
+        <header className="bg-white py-6 px-12">
             <nav className="container mx-auto flex justify-between items-center">
                 <h1 className='w-full text-primary font-bold text-3xl' ><i>grocify</i></h1>
                 <div className="flex items-center w-full">
@@ -15,14 +15,14 @@ export const Header = () => {
                 </div>
                 <div className="flex items-center justify-end w-full">
                     <button
-                        className='mx-4 flex justify-center items-center font-medium text-sm text-gray-700 rounded focus:outline-none focus:ring-0 cursor-pointer'
+                        className='mx-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
                     >
                         <IoCartOutline size={20} className="me-1 mt-1" />
                         Cart
                     </button>
                     <button
                         type='submit'
-                        className='ms-4 flex justify-center items-center font-medium text-sm text-gray-700 rounded focus:outline-none focus:ring-0 cursor-pointer'
+                        className='ms-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
                     >
                         Username
                         <TiArrowSortedDown size={18} className="ms-1" />

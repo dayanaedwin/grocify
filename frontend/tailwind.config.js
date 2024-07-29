@@ -13,7 +13,6 @@ module.exports = {
 					DEFAULT: '#FFFFFF'
 				}
 			}
-
 		},
 	},
 	plugins: [],
