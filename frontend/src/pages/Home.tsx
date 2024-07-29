@@ -15,14 +15,17 @@ export const Home = () => {
                     <img src={img} alt="Image courtsey - Freepik" />
                 </div>
             </section>
-            <section className='flex justify-around align-center py-14 px-20' >
-                {features.map((item: IAppFeature) =>
-                (<div key={item.id} className="flex-column justify-center align-center">
-                    <div className={`rounded-full mx-auto w-16 h-16 flex justify-center items-center`} style={{ backgroundColor: item.color }}>
-                        <item.icon size={23} />
-                    </div>
-                    <h5 className='text-xs font-medium py-2' >{item.title}</h5>
-                </div>))}
+            <section className='flex-column justify-around align-center py-12 px-20' >
+                <h1 className="text-2xl font-semibold text-[#4F4E4E] mb-8">Our Features</h1>
+                <div className="flex justify-around align-center">
+                    {features.map((item: IAppFeature) =>
+                    (<div key={item.id} className="flex-column justify-center align-center">
+                        <div className={`rounded-full mx-auto w-16 h-16 flex justify-center items-center`} style={{ backgroundColor: item.color }}>
+                            <item.icon size={23} />
+                        </div>
+                        <h5 className='text-xs font-medium py-2' >{item.title}</h5>
+                    </div>))}
+                </div>
             </section>
             <section className="px-12 py-10 bg-gray-100">
                 <h1 className="text-2xl font-semibold text-[#4F4E4E]">Shop by Category</h1>

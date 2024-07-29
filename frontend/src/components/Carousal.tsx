@@ -19,8 +19,6 @@ export const Carousel = () => {
             setCurrentIndex(prevIndex => Math.min(prevIndex + cardsToShow, totalCards - cardsToShow));
         }
     };
-
-    console.log(currentIndex)
     
     return (
         <div className="relative px-16">
