@@ -1,11 +1,43 @@
 import { IoCartOutline } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
+import { RouteConstants } from "../constants";
+import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 export const Header = () => {
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const handleLogout = () => {
+
+    };
+
+    //function to close the dropdown if the user clicks outside of the dropdown
+    const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setIsDropdownOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <header className="bg-white py-6 px-12">
             <nav className="container mx-auto flex justify-between items-center">
-                <h1 className='w-full text-primary font-bold text-3xl' ><i>grocify</i></h1>
+                <div className="flex items-center w-full">
+                    <Link to={RouteConstants.root}>
+                        <h1 className='w-full text-primary font-bold text-3xl' ><i>grocify</i></h1>
+                    </Link>
+                </div>
                 <div className="flex items-center w-full">
                     <input
                         type="search"
@@ -14,19 +46,34 @@ export const Header = () => {
                     />
                 </div>
                 <div className="flex items-center justify-end w-full">
-                    <button
-                        className='mx-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
-                    >
-                        <IoCartOutline size={20} className="me-1 mt-1" />
-                        Cart
-                    </button>
+                    <Link to={RouteConstants.cart}>
+                        <button
+                            className='mx-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
+                        >
+                            <IoCartOutline size={20} className="me-1 mt-1" />
+                            Cart
+                        </button>
+                    </Link>
                     <button
                         type='submit'
-                        className='ms-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
+                        className='relative ms-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
+                        onClick={toggleDropdown}
                     >
                         Username
                         <TiArrowSortedDown size={18} className="ms-1" />
+                        {isDropdownOpen && (
+                            <div ref={dropdownRef} className="absolute right-0 top-5 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg text-start">
+                                <Link to={RouteConstants.orders} className="block px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100">My Orders</Link>
+                                <button
+                                    className="block w-full text-left px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        )}
                     </button>
+
                 </div>
             </nav>
         </header>

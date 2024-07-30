@@ -15,9 +15,9 @@ export const Home = () => {
                     <img src={img} alt="Image courtsey - Freepik" />
                 </div>
             </section>
-            <section className='flex-column justify-around align-center py-12 px-20' >
+            <section className='flex-column justify-around align-center py-12 px-12' >
                 <h1 className="text-2xl font-semibold text-[#4F4E4E] mb-8">Our Features</h1>
-                <div className="flex justify-around align-center">
+                <div className="flex justify-around align-center px-12">
                     {features.map((item: IAppFeature) =>
                     (<div key={item.id} className="flex-column justify-center align-center">
                         <div className={`rounded-full mx-auto w-16 h-16 flex justify-center items-center`} style={{ backgroundColor: item.color }}>
