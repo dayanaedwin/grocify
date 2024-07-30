@@ -3,18 +3,22 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { RouteConstants } from "../constants";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { CartDrawer } from "./CartDrawer";
+import { AccountMenu } from "./AccountMenu";
 
 export const Header = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
-    const handleLogout = () => {
-
+    const toggleDrawer = () => {
+        setIsDrawerOpen(!isDrawerOpen);
     };
+
 
     //function to close the dropdown if the user clicks outside of the dropdown
     const handleClickOutside = (event: MouseEvent) => {
@@ -29,6 +33,8 @@ export const Header = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    console.log(isDrawerOpen)
 
     return (
         <header className="bg-white py-6 px-12">
@@ -46,14 +52,13 @@ export const Header = () => {
                     />
                 </div>
                 <div className="flex items-center justify-end w-full">
-                    <Link to={RouteConstants.cart}>
-                        <button
-                            className='mx-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
-                        >
-                            <IoCartOutline size={20} className="me-1 mt-1" />
-                            Cart
-                        </button>
-                    </Link>
+                    <button
+                        className='mx-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
+                        onClick={toggleDrawer}
+                    >
+                        <IoCartOutline size={20} className="me-1 mt-1" />
+                        Cart                        
+                    </button>
                     <button
                         type='submit'
                         className='relative ms-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
@@ -61,21 +66,11 @@ export const Header = () => {
                     >
                         Username
                         <TiArrowSortedDown size={18} className="ms-1" />
-                        {isDropdownOpen && (
-                            <div ref={dropdownRef} className="absolute right-0 top-5 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg text-start">
-                                <Link to={RouteConstants.orders} className="block px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100">My Orders</Link>
-                                <button
-                                    className="block w-full text-left px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100"
-                                    onClick={handleLogout}
-                                >
-                                    Logout
-                                </button>
-                            </div>
-                        )}
                     </button>
-
+                    <AccountMenu isOpen={isDropdownOpen} dropdownRef={dropdownRef} toggleDropdown={toggleDropdown} />
                 </div>
             </nav>
+            <CartDrawer isOpen={isDrawerOpen} onClose={toggleDrawer} />
         </header>
     );
 };
