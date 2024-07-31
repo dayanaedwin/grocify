@@ -34,8 +34,6 @@ export const Header = () => {
         };
     }, []);
 
-    console.log(isDrawerOpen)
-
     return (
         <header className="bg-white py-6 px-12">
             <nav className="container mx-auto flex justify-between items-center">

@@ -1,5 +1,5 @@
 import img from '../utils/images/delivery.png';
-import { features, IAppFeature, productsCategories } from '../constants';
+import { features, IAppFeature } from '../constants';
 import { Carousel } from '../components';
 
 export const Home = () => {
