@@ -2,12 +2,12 @@ import { cartItems, ICartItem } from '../constants';
 import { CartItem } from './CartItem';
 import { IoChevronForward, IoClose } from "react-icons/io5";
 
-interface ICartDrawer {
+interface CartDrawerProps {
     isOpen: boolean;
     onClose: () => void
 }
 
-export const CartDrawer: React.FC<ICartDrawer> = ({ isOpen, onClose }) => {
+export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 
     return (
         <div className={`fixed inset-0 z-50 transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>

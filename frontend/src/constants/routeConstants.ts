@@ -6,7 +6,7 @@ const RouteConstants: routeConstantsType = {
     product_details: '/products/:id',
     orders: '/orders',    
     order_details: '/orders/:id',
-    cart: '/cart',
+    checkout: '/checkout',
 }
 
 type routeConstantsType = {
@@ -17,7 +17,7 @@ type routeConstantsType = {
     product_details: string,
     orders: string,
     order_details: string,
-    cart: string,
+    checkout: string,
 }
 
 export { RouteConstants };

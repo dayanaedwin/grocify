@@ -1,5 +1,5 @@
 export { AppLayout } from './AppLayout';
-export { Cart } from './Cart';
+export { Checkout } from './Checkout';
 export { Home } from './Home';
 export { Login } from './Login';
 export { OrderDetails } from './OrderDetails';

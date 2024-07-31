@@ -5,3 +5,6 @@ export { Orders } from './Orders';
 export { CartDrawer } from './CartDrawer';
 export { AccountMenu } from './AccountMenu';
 export { CartItem } from './CartItem';
+export { FilterBar } from './FilterBar';
+export { ProductList } from './ProductList';
+export { ProductCard } from './ProductCard';

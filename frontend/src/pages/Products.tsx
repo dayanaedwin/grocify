@@ -1,10 +1,12 @@
+import { FilterBar, ProductList } from "../components";
+import { products } from "../constants";
 
 export const Products = () => {
-  // Assume products is an array of product objects fetched from the API
 
-  return (
-    <div>
-      Products
-    </div>
-  );
+	return (
+		<div className='flex flex-grow overflow-y-auto bg-[#FAF9F8] pt-4 pb-6' >
+			<FilterBar />
+			<ProductList products={products} />
+		</div>
+	);
 };

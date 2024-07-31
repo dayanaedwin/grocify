@@ -1,5 +1,5 @@
-import { Routes, Route, Router, Outlet, Navigate } from 'react-router-dom';
-import { Login, SignUp, AppLayout, Home, Products, ProductDetails, Cart, Orders, OrderDetails } from './pages';
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { Login, SignUp, AppLayout, Home, Products, ProductDetails, Checkout, Orders, OrderDetails } from './pages';
 import { RouteConstants } from './constants';
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
 					<Route path={RouteConstants.product_details} element={<ProductDetails />} />
 					<Route path={RouteConstants.orders} element={<Orders />} />
 					<Route path={RouteConstants.order_details} element={<OrderDetails />} />
-					<Route path={RouteConstants.cart} element={<Cart />} />
+					<Route path={RouteConstants.checkout} element={<Checkout />} />
 				</Route>
 			</Route>
 		</Routes >

@@ -1,11 +1,11 @@
 import { CiTrash } from 'react-icons/ci';
 import { ICartItem } from '../constants';
 
-interface ICartItems {
+interface CartItemsProps {
     item: ICartItem,
 }
 
-export const CartItem: React.FC<ICartItems> = ({ item: { _id, productDetails, quantity } }) => {
+export const CartItem: React.FC<CartItemsProps> = ({ item: { _id, productDetails, quantity } }) => {
     return (
         <div className='bg-gray-50 space-y-2 cursor-pointer'>
             <div className='flex space-x-2'>

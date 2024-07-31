@@ -2,13 +2,13 @@ import React, { RefObject } from "react"
 import { RouteConstants } from "../constants"
 import { Link } from "react-router-dom"
 
-interface IAccountMenu {
+interface AccountMenuProps {
     isOpen: boolean;
     dropdownRef: RefObject<HTMLDivElement>,
     toggleDropdown: () => void
 }
 
-export const AccountMenu: React.FC<IAccountMenu> = ({ isOpen, dropdownRef, toggleDropdown }) => {
+export const AccountMenu: React.FC<AccountMenuProps> = ({ isOpen, dropdownRef, toggleDropdown }) => {
     return (
         <React.Fragment>
             {isOpen && (
