@@ -8,7 +8,7 @@ export const ProductDetails = () => {
 	const [product, setProduct] = useState(products[0]);
 
 	return (
-		<div className='flex flex-grow overflow-y-auto py-12' >
+		<div className='flex flex-grow overflow-y-auto py-12 px-32' >
 			<ProductImageGallery images={product.images} productName={product.name} />
 			<ProductDescription product={product} />
 		</div>

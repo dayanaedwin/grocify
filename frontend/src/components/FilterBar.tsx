@@ -10,11 +10,11 @@ export const FilterBar = () => {
 	}
 
 	return (
-		<div className='w-1/5 p-4'>
+		<div className='w-1/5 py-4 space-y-4'>
 			<h2 className='text-lg font-semibold mb-4'>Filters</h2>
 
 			{/* Category Filter */}
-			<div >
+			<div>
 				<div className='flex justify-between items-center pb-2 text-gray-700'>
 					<label className='text-sm font-semibold'>Category</label>
 					<button
@@ -30,8 +30,6 @@ export const FilterBar = () => {
 					))}
 				</select>
 			</div>
-
-			<hr className='my-4' />
 
 			{/* Price Filter */}
 			<div >

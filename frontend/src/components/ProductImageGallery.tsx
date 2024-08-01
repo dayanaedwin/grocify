@@ -29,7 +29,7 @@ export const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images
     };
 
     return (
-        <div className='w-1/2 flex items-center justify-around space-x-6 px-4'>
+        <div className='w-1/2 flex items-center justify-around space-x-6'>
             <div className='flex flex-col justify-between items-center w-full'>
                 <button
                     className='shadow-lg bg-white border border-gray-200 text-black p-2 rounded-full mb-2'
@@ -61,7 +61,7 @@ export const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images
                     <IoIosArrowDown />
                 </button>
             </div>
-            <img src={`data:image/png;base64,${images[focusedImage]}`} alt={productName} className="h-80" />
+            <img src={`data:image/png;base64,${images[focusedImage]}`} alt={productName} className="h-80 object-cover" />
         </div>
     )
 }

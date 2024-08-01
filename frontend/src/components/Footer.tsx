@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 
 export const Footer = () => {
 	return (
-		<footer className="bg-secondary py-4 px-12">
-			<div className="container mx-auto px-4">
+		<footer className="bg-secondary py-4 mx-32">
+			<div className="container px-4">
 				<div className="flex flex-wrap justify-center mb-4 px-20">
 					<div className="w-full lg:w-1/3 xl:w-1/4 md:px-4 lg:px-10 py-5 mb-6 lg:mb-0">
 						<h1 className='uppercase text-gray-700 font-bold mb-4'>About Us</h1>

@@ -35,8 +35,8 @@ export const Header = () => {
     }, []);
 
     return (
-        <header className="bg-white py-6 px-12">
-            <nav className="container mx-auto flex justify-between items-center">
+        <header className="bg-white py-6 mx-32">
+            <nav className="container flex justify-between items-center">
                 <div className="flex items-center w-full">
                     <Link to={RouteConstants.root}>
                         <h1 className='w-full text-primary font-bold text-3xl' ><i>grocify</i></h1>

@@ -8,7 +8,7 @@ interface ProductListProps {
 
 export const ProductList: React.FC<ProductListProps> = ({ products }) => {
     return (
-        <div className='w-3/4 p-4'>
+        <div className='w-3/4 py-4'>
             <div className='flex justify-between items-center mb-4'>
                 <h2 className='text-xl font-semibold'>Products</h2>
                 <select className='p-2 border border-gray-300 rounded text-gray-700 text-sm'>

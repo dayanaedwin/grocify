@@ -6,7 +6,7 @@ import { Carousel } from '../components';
 export const Home = () => {
     return (
         <div className=''>
-            <section className='bg-gray-100 flex justify-between align-center p-12'>
+            <section className='bg-gray-100 flex justify-between align-center py-12 px-32'>
                 <div className='flex-1 mt-2'>
                     <h1 className='text-5xl font-semibold text-[#4f4e4e] pt-4 pb-8 pe-5 leading-tight'>Grocify your life with fresh, quality groceries delivered to your doorstep.</h1>
                     <Link to={RouteConstants.products}>
@@ -18,7 +18,7 @@ export const Home = () => {
                     <img src={deliveryImg} alt="Image courtsey - Freepik" />
                 </div>
             </section>
-            <section className='flex-column justify-around align-center py-12 px-12' >
+            <section className='flex-column justify-around align-center py-12 px-32' >
                 <h1 className="text-2xl font-semibold text-[#4F4E4E] mb-8">Our Features</h1>
                 <div className="flex justify-around align-center px-12">
                     {features.map((item: IAppFeature) =>
@@ -30,7 +30,7 @@ export const Home = () => {
                     </div>))}
                 </div>
             </section>
-            <section className="px-12 py-10 bg-gray-100">
+            <section className="px-32 py-10 bg-gray-100">
                 <h1 className="text-2xl font-semibold text-[#4F4E4E]">Shop by Category</h1>
                 <Carousel />
             </section>
