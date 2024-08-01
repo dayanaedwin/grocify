@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import img from '../utils/images/delivery.png';
+import deliveryImg from '../utils/images/delivery.png';
 import { features, IAppFeature, RouteConstants } from '../constants';
 import { Carousel } from '../components';
 
@@ -15,7 +15,7 @@ export const Home = () => {
                 </div>
                 <div className='flex-1 justify-between align-center'>
                     {/* Image by <a href="https://www.freepik.com/free-vector/safe-food-delivery_8644518.htm#query=grocery&position=46&from_view=keyword&track=sph&uuid=85de44f7-31e7-403f-8f66-8c86374ac757">Freepik</a> */}
-                    <img src={img} alt="Image courtsey - Freepik" />
+                    <img src={deliveryImg} alt="Image courtsey - Freepik" />
                 </div>
             </section>
             <section className='flex-column justify-around align-center py-12 px-12' >

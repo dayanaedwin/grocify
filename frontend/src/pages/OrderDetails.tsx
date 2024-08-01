@@ -5,8 +5,7 @@ export const OrderDetails = () => {
   const { id } = useParams(); 
   
   return (
-    <div>
-      {`Order details - ${id}`}
+    <div className='flex flex-grow overflow-y-auto' >
     </div>
   );
 };
