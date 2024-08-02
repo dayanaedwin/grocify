@@ -4,7 +4,9 @@ const RouteConstants: routeConstantsType = {
     sign_up: '/sign-up',
     products: '/products',
     product_details: '/products/:id',
-    orders: '/orders',    
+    account: '/account',
+    profile: '/account/profile',
+    orders: '/account/orders',
     order_details: '/orders/:id',
     checkout: '/checkout',
 }
@@ -15,6 +17,8 @@ type routeConstantsType = {
     sign_up: string,
     products: string,
     product_details: string,
+    account: string
+    profile: string,
     orders: string,
     order_details: string,
     checkout: string,

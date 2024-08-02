@@ -3,7 +3,7 @@ export { Checkout } from './Checkout';
 export { Home } from './Home';
 export { Login } from './Login';
 export { OrderDetails } from './OrderDetails';
-export { Orders } from './Orders';
+export { Account } from './Account';
 export { ProductDetails } from './ProductDetails';
 export { Products } from './Products';
 export { SignUp } from './SignUp';

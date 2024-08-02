@@ -15,7 +15,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 <div className='flex flex-col items-start w-full'>
                     <h3 className='text-md font-normal'>{product.name}</h3>
                     <div className="flex items-center justify-between w-full">
-                        <p className='text-gray-700 text-sm font-semibold'>{product.currency} {product.price}</p>
+                        <p className='text-gray-700 text-sm font-semibold'>₹ {product.price}</p>
                         <button className='bg-whiite text-primary text-sm font-semibold py-1 px-4 rounded border border-primary hover:bg-white hover:text-primary'>
                             <HiOutlineShoppingCart />
                         </button>

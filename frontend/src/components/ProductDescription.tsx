@@ -14,7 +14,7 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = ({ product 
                 <p className='text-sm text-gray-500'>{product.seller}</p>
                 <p>Rating {product.rating}</p>
                 <div className="">
-                    <p className='text-2xl font-semibold'>{product.currency} {product.price}</p>
+                    <p className='text-2xl font-semibold'>₹ {product.price}</p>
                     <p className="text-sm text-gray-500">(inclusive of all taxes)</p>
                 </div>
                 <p className={`text-md font-semibold ${product.stock > 0 ? 'text-green-700' : 'text-red-700'}`}>{`${product.stock > 0 ? 'In Stock' : 'Out of Stock'}`}</p>

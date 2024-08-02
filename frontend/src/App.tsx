@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
-import { Login, SignUp, AppLayout, Home, Products, ProductDetails, Checkout, Orders, OrderDetails } from './pages';
+import { Login, SignUp, AppLayout, Home, Products, ProductDetails, Checkout, Account, OrderDetails } from './pages';
+import { OrderList, Profile } from './components';
 import { RouteConstants } from './constants';
 
 const App = () => {
@@ -12,7 +13,10 @@ const App = () => {
 					<Route index element={<Home />} />
 					<Route path={RouteConstants.products} element={<Products />} />
 					<Route path={RouteConstants.product_details} element={<ProductDetails />} />
-					<Route path={RouteConstants.orders} element={<Orders />} />
+					<Route path={RouteConstants.account} element={<Account />} >
+						<Route path={RouteConstants.profile} element={<Profile />} />
+						<Route path={RouteConstants.orders} element={<OrderList />} />
+					</Route>
 					<Route path={RouteConstants.order_details} element={<OrderDetails />} />
 					<Route path={RouteConstants.checkout} element={<Checkout />} />
 				</Route>

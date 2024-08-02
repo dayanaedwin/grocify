@@ -3,8 +3,7 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { RouteConstants } from "../constants";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { CartDrawer } from "./CartDrawer";
-import { AccountMenu } from "./AccountMenu";
+import { CartDrawer,AccountMenu } from "./index";
 
 export const Header = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);

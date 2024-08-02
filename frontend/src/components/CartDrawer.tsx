@@ -27,7 +27,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                     ))}
                 </ul>
                 <button onClick={onClose} className="flex justify-center items-center mt-4 bg-primary text-white font-semibold py-2 px-4 rounded border border-primary hover:bg-white hover:text-primary">
-                    Proceed to Checkout
+                    {`${cartItems.length > 0 ? 'Proceed to Checkout' : 'Continue Shopping'}`}
                     <IoChevronForward className='mt-1 ms-1 font-bold text-xl' />
                 </button>
             </div>

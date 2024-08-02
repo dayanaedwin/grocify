@@ -14,7 +14,7 @@ export const CartItem: React.FC<CartItemsProps> = ({ item: { _id, productDetails
                     <div className='flex-column items-center py-2 text-sm'>
                         <h6 className='font-semibold'>{productDetails.name}</h6>
                         <p className='text-gray-400'>1 {productDetails.uom}</p>
-                        <p className='font-semibold'>{productDetails.currency} {productDetails.price}</p>
+                        <p className='font-semibold'>₹ {productDetails.price}</p>
                     </div>
                     <div className='space-y-2 flex flex-col p-2'>
                         <div className='flex items-center bg-primary text-white rounded space-x-3 px-4 text-center font-semibold'>
