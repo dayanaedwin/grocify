@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deliveryStatus, IDeliveryStatus, orders } from "../constants";
+import { deliveryStatus, IDeliveryStatus, IOrderDateFilter, orderDateFilter, orders } from "../constants";
 import { convertDate, handleStatus, handleStatusBgColor, handleStatusColor } from "../helpers";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -27,7 +27,13 @@ export const OrderList = () => {
                         </button>
                     ))}
                 </div>
-                <div>Filter</div>
+                <div>
+                    <select className="rounded-full border bg-gray-100 text-gray-500 px-2 py-1 text-xs">
+                        {orderDateFilter.map((item: IOrderDateFilter, index: number) => (
+                            <option key={item.key} value={item.name}>{item.name}</option>
+                        ))}
+                    </select>
+                </div>
             </div>
             <div className="space-y-4">
                 {orders.map((order: any, index: number) => (
