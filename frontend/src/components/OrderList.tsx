@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { deliveryStatus, IDeliveryStatus, IOrderDateFilter, orderDateFilter, orders } from "../constants";
+import { deliveryStatus, IDeliveryStatus, IOrderDateFilter, orderDateFilter, orders, RouteConstants } from "../constants";
 import { convertDate, handleStatus, handleStatusBgColor, handleStatusColor } from "../helpers";
 import { IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export const OrderList = () => {
     const [selected, setSelected] = useState({ status: 0, dateRange: 0 });
@@ -13,7 +14,7 @@ export const OrderList = () => {
     return (
         <div className="w-3/4 space-y-4">
             <div className="flex">
-                Breadcrumb for navigation - use a common components
+                Breadcrumb for navigation - use a common component
             </div>
             <div className="flex justify-between">
                 <div className="space-x-4">
@@ -37,7 +38,7 @@ export const OrderList = () => {
             </div>
             <div className="space-y-4">
                 {orders.map((order: any, index: number) => (
-                    <div className="p-4 border border-gray-300 rounded-lg flex justify-between cursor-pointer hover:shadow-lg">
+                    <Link key={order._id} to={`${RouteConstants.orders_root}/${order._id}`} className="p-4 border border-gray-300 rounded-lg flex justify-between cursor-pointer hover:shadow-lg" >
                         <div className="space-y-2">
                             <div className="flex space-x-2 text-gray-500 text-sm">
                                 <div className={`flex justify-center items-center space-x-1 px-2 py-0 rounded-full text-center m-0 ${handleStatusColor(order.orderStatus)}`}>
@@ -57,7 +58,7 @@ export const OrderList = () => {
                             </div>
                         </div>
                         <button className="text-primary"><IoIosArrowForward size={20} /></button>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
