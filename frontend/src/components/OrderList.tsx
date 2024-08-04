@@ -49,10 +49,23 @@ export const OrderList = () => {
                                 <p className="text-gray-500 text-xs">{convertDate(order.createdAt)}</p>
                             </div>
                             <div className="flex space-x-4">
-                                <img src={`data:image/png;base64,${order.products[0].productDetails.images[0]}`} alt={order.products[0].productDetails.name} className='w-16 rounded-lg' />
+                                <div className="relative">
+                                    <img
+                                        src={`data:image/png;base64,${order.products[0].productDetails.images[0]}`}
+                                        alt={order.products[0].productDetails.name}
+                                        className='w-16 rounded-lg'
+                                    />
+                                    {order.products.length > 1 &&
+                                        <div className="absolute bottom-0 right-0 text-white text-xs rounded-br-md pe-1 font-semibold bg-black opacity-60">
+                                            <p >+{order.products.length - 1}</p>
+
+                                        </div>
+                                    }
+                                </div>
+
                                 <div className="space-y-1">
                                     <h6 className="text-primary font-semibold text-sm">Order ID: {order._id}</h6>
-                                    <p className="text-xs font-semibold text-gray-700">{order.products[0].productDetails.name}</p>
+                                    <p className="text-xs font-semibold text-gray-700">{`${order.products[0].productDetails.name} ${order.products.length > 1 ? `& ${order.products.length - 1} more items` : ''}`}</p>
                                     <p className="text-sm font-semibold text-black">₹ {order.products[0].productDetails.price}</p>
                                 </div>
                             </div>
