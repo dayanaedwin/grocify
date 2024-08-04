@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { accountSidebarItems, ISidebarItem, RouteConstants } from "../constants";
+import { accountSidebarItems, ISidebarItem } from "../constants";
 
 export const AccountSidebar = () => {
-    const baseClass = 'text-gray-700 flex items-center space-x-2 text-md font-semibold rounded-md p-3 hover:text-primary hover:bg-[#F6F6F6]';
+    const baseClass = 'text-gray-700 flex items-center space-x-2 text-sm font-semibold rounded-md p-3 hover:text-primary hover:bg-[#F6F6F6]';
 
     return (
         <ul className="w-1/4 pe-10">

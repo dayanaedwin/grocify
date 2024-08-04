@@ -4,6 +4,7 @@ export { AddressCard } from './AddressCard';
 export { Carousel } from './Carousal';
 export { CartDrawer } from './CartDrawer';
 export { CartItem } from './CartItem';
+export { ChangePassword } from './ChangePassword';
 export { DeliveryItemCard } from './DeliveryItemCard';
 export { FilterBar } from './FilterBar';
 export { Footer } from './Footer';

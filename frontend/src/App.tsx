@@ -1,6 +1,6 @@
 import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import { Login, SignUp, AppLayout, Home, Products, ProductDetails, Checkout, Account, OrderDetails } from './pages';
-import { OrderList, Profile } from './components';
+import { ChangePassword, OrderList, Profile } from './components';
 import { RouteConstants } from './constants';
 
 const App = () => {
@@ -16,6 +16,7 @@ const App = () => {
 					<Route path={RouteConstants.account} element={<Account />} >
 						<Route path={RouteConstants.profile} element={<Profile />} />
 						<Route path={RouteConstants.orders} element={<OrderList />} />
+						<Route path={RouteConstants.change_password} element={<ChangePassword />} />
 					</Route>
 					<Route path={RouteConstants.order_details} element={<OrderDetails />} />
 					<Route path={RouteConstants.checkout} element={<Checkout />} />
