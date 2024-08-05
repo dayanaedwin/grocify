@@ -49,7 +49,7 @@ export const Footer = () => {
 					</div>
 				</div>
 				<div className="text-center">
-					<p className="text-gray-600">&copy; 2024 Grocify. All rights reserved.</p>
+					<p className="text-gray-600 text-xs">&copy; 2024 Grocify. All rights reserved.</p>
 				</div>
 			</div>
 		</footer>

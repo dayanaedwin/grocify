@@ -1,4 +1,5 @@
-import { cartItems, ICartItem } from '../constants';
+import { Link } from 'react-router-dom';
+import { cartItems, ICartItem, RouteConstants } from '../constants';
 import { CartItem } from './CartItem';
 import { IoChevronForward, IoClose } from "react-icons/io5";
 
@@ -26,10 +27,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                         </li>
                     ))}
                 </ul>
-                <button onClick={onClose} className="flex justify-center items-center mt-4 bg-primary text-white font-semibold py-2 px-4 rounded border border-primary hover:bg-white hover:text-primary">
-                    {`${cartItems.length > 0 ? 'Proceed to Checkout' : 'Continue Shopping'}`}
-                    <IoChevronForward className='mt-1 ms-1 font-bold text-xl' />
-                </button>
+                <Link to={cartItems.length > 0 ? RouteConstants.checkout : ''} >
+                    <button onClick={onClose} className="flex justify-center items-center mt-4 bg-primary text-white font-semibold py-2 px-4 rounded border border-primary hover:bg-white hover:text-primary">
+                        {`${cartItems.length > 0 ? 'Proceed to Checkout' : 'Continue Shopping'}`}
+                        <IoChevronForward className='mt-1 ms-1 font-bold text-xl' />
+                    </button>
+                </Link>
             </div>
         </div>
     );
