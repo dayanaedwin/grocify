@@ -1,4 +1,5 @@
 import { IProductDetails } from "../constants"
+import { Rating } from "./Rating"
 
 
 interface ProductDescriptionProps {
@@ -6,13 +7,13 @@ interface ProductDescriptionProps {
 }
 
 export const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
-    console.log(product)
+
     return (
         <div className='w-1/2 px-20 space-y-2 flex flex-col justify-between'>
             <div className="py-10 space-y-2">
                 <h2 className='text-2xl font-bold'>{`${product.name} (1 ${product.uom})`}</h2>
                 <p className='text-sm text-gray-500'>{product.seller}</p>
-                <p>Rating {product.rating}</p>
+                <Rating rating={product.rating} />
                 <div className="">
                     <p className='text-2xl font-semibold'>₹ {product.price}</p>
                     <p className="text-sm text-gray-500">(inclusive of all taxes)</p>
