@@ -1,7 +1,9 @@
 import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Login, SignUp, AppLayout, Home, Products, ProductDetails, Checkout, Account, OrderDetails } from './pages';
 import { OrderList, Profile } from './components';
 import { RouteConstants } from './constants';
+import { RootState } from './store';
 
 const App = () => {
 	return (
@@ -26,8 +28,8 @@ const App = () => {
 }
 
 const ProtectedRoutes = () => {
-	const auth = { token: true }
-	return (auth && auth.token) ? <Outlet /> : <Navigate to={RouteConstants.login} />
+	const { token } = useSelector((state: RootState) => state.auth);
+	return (token) ? <Outlet /> : <Navigate to={RouteConstants.login} />
 }
 
 export default App;

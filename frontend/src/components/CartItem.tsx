@@ -22,9 +22,9 @@ export const CartItem: React.FC<CartItemsProps> = ({ item: { _id, productDetails
                             <h6 className='text-sm py-1'>{quantity}</h6>
                             <button className='text-lg'>+</button>
                         </div>
-                        <button className='flex justify-center'>
+                        {/* <button className='flex justify-center'>
                             <CiTrash size={18} />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
