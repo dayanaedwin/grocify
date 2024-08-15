@@ -3,7 +3,7 @@ import { APIS } from '../constants';
 
 // Create axios instance with default settings
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:4000/',
+    baseURL: '',
     headers: {
         'Content-Type': 'application/json',
     },

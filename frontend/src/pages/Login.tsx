@@ -1,19 +1,18 @@
-import { useState } from 'react';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../constants';
-import { Link } from 'react-router-dom';
-
-interface IFormValues {
-	email_id: string;
-	password: string;
-}
+import { login, LoginForm } from '../thunks';
+import { AppDispatch } from '../store';
 
 export const Login = () => {
+	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
 
 	const validationSchema = Yup.object().shape({
-		email_id: Yup.string()
+		email: Yup.string()
 			.required('Email is required')
 			.email("Email is not valid")
 			.matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, 'Email is not valid'),
@@ -21,16 +20,20 @@ export const Login = () => {
 			.required('Password is required')
 	});
 
-	const { handleSubmit, register, formState } = useForm({
+	const { handleSubmit, register, formState: { errors, isSubmitting, isValid } } = useForm({
 		resolver: yupResolver(validationSchema),
-		reValidateMode: 'onChange',
+		mode: 'onChange'
 	});
-	const { errors, isSubmitting, isValid } = formState;
 
-	const onSubmit = async (values: IFormValues) => {
-		console.log(errors.email_id, errors.password)
+	const onSubmit = async (data: LoginForm) => {
 		if (Object.values(errors).length > 0) {
 			return;
+		}
+		try {
+			await dispatch(login(data)).unwrap();
+			navigate(RouteConstants.root);
+		} catch (error) {
+			console.log(error);
 		}
 	}
 
@@ -49,16 +52,12 @@ export const Login = () => {
 					<div>
 						<h1 className='text-sm text-black font-medium'>Email</h1>
 						<input
-							{...register("email_id")}
+							{...register("email")}
 							type='email'
 							placeholder='Enter your email'
 							className='w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-700'
 						/>
-						{errors?.email_id?.message
-							&& <p className='text-red-700 text-sm'>
-								{errors?.email_id?.message}
-							</p>
-						}
+						<p className={`text-red-700 text-sm ${errors?.email?.message ? 'block' : 'hidden'}`}>{errors?.email?.message}</p>
 					</div>
 
 					<div>
@@ -70,17 +69,13 @@ export const Login = () => {
 							placeholder='Enter your password'
 							className='w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-700'
 						/>
-						{errors?.password?.message
-							&& <p className='text-red-700 text-sm'>
-								{errors?.password?.message}
-							</p>
-						}
+						<p className={`text-red-700 text-sm ${errors?.password?.message ? 'block' : 'hidden'}`} >{errors?.password?.message}</p>
 					</div>
 
 					<button
 						type='submit'
 						disabled={!isValid}
-						className='w-full py-2 my-2 font-semibold text-base bg-primary text-white border rounded cursor-pointer focus:outline-none hover:bg-white hover:text-primary hover:border-primary focus:ring focus:ring-black'
+						className='w-full py-2 my-2 font-semibold text-base bg-primary text-white border rounded cursor-pointer focus:outline-none focus:ring disabled:opacity-50 disabled:cursor-not-allowed'
 					>
 						Login
 					</button>

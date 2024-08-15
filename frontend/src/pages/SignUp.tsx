@@ -3,8 +3,8 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
-import { RouteConstants } from '../constants';
 import { useDispatch } from 'react-redux';
+import { RouteConstants } from '../constants';
 import { RegisterForm, signUp } from '../thunks';
 import { AppDispatch } from '../store';
 
@@ -34,7 +34,7 @@ export const SignUp = () => {
         }
         try {
             await dispatch(signUp(data)).unwrap();
-            navigate(RouteConstants.root);
+            navigate(RouteConstants.login);
         } catch (error) {
             console.log(error);
         }
@@ -85,6 +85,7 @@ export const SignUp = () => {
                         <p className={`text-red-700 text-sm ${errors?.password?.message ? 'block' : 'hidden'}`} >{errors?.password?.message}</p>
                     </div>
                     <button
+                        type='submit'
                         disabled={!isValid}
                         className='w-full py-2 my-2 font-semibold text-base bg-primary text-white border rounded cursor-pointer focus:outline-none focus:ring disabled:opacity-50 disabled:cursor-not-allowed'
                     >
