@@ -1,5 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 import { APIS } from '../constants';
+import { useNavigate } from 'react-router-dom';
 
 // Create axios instance with default settings
 export const axiosInstance = axios.create({
@@ -19,6 +20,18 @@ axiosInstance.interceptors.request.use(
         return config;
     },
     (error) => {
+        return Promise.reject(error);
+    }
+);
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if ([401, 403].includes(error.response.status)) {
+            localStorage.removeItem('token');
+            const navigate = useNavigate();
+            navigate('/login');
+        }
         return Promise.reject(error);
     }
 );

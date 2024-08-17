@@ -13,8 +13,20 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({ isOpen, dropdownRef, t
         <React.Fragment>
             {isOpen && (
                 <div ref={dropdownRef} className="absolute right-22 top-12 mt-2 w-36 bg-white border border-gray-200 rounded shadow-lg text-start">
-                    <Link to={RouteConstants.profile} className="block px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100" onClick={toggleDropdown}>Account</Link>
-                    <Link to={RouteConstants.orders} className="block px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100" onClick={toggleDropdown}>Orders</Link>
+                    <Link
+                        to={RouteConstants.profile}
+                        className="block px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100"
+                        onClick={toggleDropdown}
+                    >
+                        Account
+                    </Link>
+                    <Link
+                        to={RouteConstants.orders}
+                        className="block px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100"
+                        onClick={toggleDropdown}
+                    >
+                        Orders
+                    </Link>
                     <button
                         className="block w-full text-left px-4 py-2 text-gray-700 text-sm font-semibold hover:bg-gray-100"
                         onClick={toggleDropdown}

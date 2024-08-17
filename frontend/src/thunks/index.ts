@@ -1,1 +1,2 @@
-export * from './authThunks';
+export * from './authThunk';
+export * from './userThunk';

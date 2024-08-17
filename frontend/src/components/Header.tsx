@@ -3,13 +3,16 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { RouteConstants } from "../constants";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { CartDrawer,AccountMenu } from "./index";
+import { CartDrawer, AccountMenu } from "./index";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 export const Header = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const { user } = useSelector((state: RootState) => state.user);
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-
+    
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
@@ -54,14 +57,14 @@ export const Header = () => {
                         onClick={toggleDrawer}
                     >
                         <IoCartOutline size={20} className="me-1 mt-1" />
-                        Cart                        
+                        Cart
                     </button>
                     <button
                         type='submit'
                         className='relative ms-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
                         onClick={toggleDropdown}
                     >
-                        Username
+                        {user?.name}
                         <TiArrowSortedDown size={18} className="ms-1" />
                     </button>
                     <AccountMenu isOpen={isDropdownOpen} dropdownRef={dropdownRef} toggleDropdown={toggleDropdown} />
