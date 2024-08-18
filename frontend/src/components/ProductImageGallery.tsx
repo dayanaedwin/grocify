@@ -37,7 +37,7 @@ export const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images
                 >
                     <IoIosArrowUp />
                 </button>
-                <div className='relative w-full h-64 overflow-hidden'>
+                <div className='relative w-full h-64 overflow-hidden flex justify-center items-center'>
                     <div
                         className='flex flex-col items-center transition-transform duration-500 ease-in-out space-y-2'
                         style={{ transform: `translateY(-${currentIndex * (100 / cardsToShow)}%)` }}
@@ -45,9 +45,9 @@ export const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images
                         {images.map((item: string, index: number) => (
                             <img
                                 key={index}
-                                src={`data:image/png;base64,${item}`}
+                                src={item}
                                 alt={productName}
-                                className='w-full w-20 h-20 object-cover cursor-pointer'
+                                className='w-20 h-20 object-cover cursor-pointer'
                                 onMouseOver={() => handleImageSelection(index)}
                                 onClick={() => handleImageSelection(index)}
                             />
@@ -61,7 +61,7 @@ export const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images
                     <IoIosArrowDown />
                 </button>
             </div>
-            <img src={`data:image/png;base64,${images[focusedImage]}`} alt={productName} className="h-80 object-cover" />
+            <img src={images[focusedImage]} alt={productName} className="h-80 object-cover" />
         </div>
     )
 }

@@ -15,7 +15,6 @@ export const fetchProducts = createAsyncThunk(
                     return { ...product, imageUrls };
                 })
             );
-            console.log(productsWithImageUrls)
             return productsWithImageUrls;
         } catch (error: any) {
             return rejectWithValue(error.response.error);
@@ -24,11 +23,14 @@ export const fetchProducts = createAsyncThunk(
 );
 
 export const fetchProductById = createAsyncThunk(
-    `${APIS.PRODUCT}/:productId`,
-    async (productId, { rejectWithValue }) => {
+    `${APIS.PRODUCTS}/:productId`,
+    async (productId: string, { rejectWithValue }) => {
         try {
-            const response = await axiosInstance.get(`${APIS.PRODUCT}/${productId}`);
-            return response.data;
+            const response = await axiosInstance.get(`${APIS.PRODUCTS}/${productId}`);
+            const product = response.data;
+            console.log(product)
+            const imageUrls = await Promise.all(product.images.map(getFirebaseImgURL));
+            return { ...product, imageUrls };
         } catch (error: any) {
             return rejectWithValue(error.response.error);
         }
