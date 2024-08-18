@@ -1,3 +1,6 @@
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../constants';
+
 export const convertDate = (date: string) => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
     return new Date(date).toLocaleDateString('en-IN', options);
@@ -55,4 +58,10 @@ export const handleStatus = (status: string) => {
             break;
     }
     return statusName;
+}
+
+export const getFirebaseImgURL = async (path: string) => {
+    const storageRef = ref(storage, encodeURI(path));
+    const url = await getDownloadURL(storageRef);
+    return url;
 }

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AuthResponse, login, signUp } from "../thunks";
+import { createSlice } from "@reduxjs/toolkit";
+import { login, signUp } from "../thunks";
 
 interface AuthState {
     token: string | null;

@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import { FilterBar, ProductList } from "../components";
-import { products } from "../constants";
 
 export const Products = () => {
 
@@ -7,7 +7,7 @@ export const Products = () => {
 		<div className='flex flex-grow overflow-y-auto bg-[#FAF9F8] pt-4 pb-6 px-32 justify-between' >
 			<FilterBar />
 			<hr />
-			<ProductList products={products} />
+			<ProductList />
 		</div>
 	);
 };
