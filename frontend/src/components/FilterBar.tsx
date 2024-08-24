@@ -3,10 +3,11 @@ import { IProductCategory, productsCategories } from '../constants';
 import { useState } from 'react';
 
 interface FilterBarProps {
-	handleCategoryChange: (value: string) => void
+	handleCategoryChange: (value: string) => void;
+	handlePriceChange: (value: number) => void;
 }
 
-export const FilterBar: React.FC<FilterBarProps> = ({ handleCategoryChange }) => {
+export const FilterBar: React.FC<FilterBarProps> = ({ handleCategoryChange, handlePriceChange }) => {
 	const [isExpand, setIsExpand] = useState<{ category: boolean, price: boolean }>({ category: false, price: false });
 
 	const handleIconExpand = (fieldName: keyof typeof isExpand) => {
@@ -48,7 +49,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({ handleCategoryChange }) =>
 						<MdKeyboardArrowDown size={20} />
 					</button>
 				</div>
-				<input type='range' className={`w-full mt-1 ${isExpand.price ? 'block' : 'hidden'}`} />
+				<input 
+				type='range' 
+				className={`w-full mt-1 ${isExpand.price ? 'block' : 'hidden'}`} 
+				min={10} 
+                max={1000}
+				onChange={(event) => handlePriceChange(parseFloat(event.target.value))}
+				/>
 			</div>
 		</div>
 	)
