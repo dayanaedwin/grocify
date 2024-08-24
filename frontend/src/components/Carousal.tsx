@@ -25,7 +25,7 @@ export const Carousel = () => {
             <div className="overflow-hidden">
                 <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(${-(currentIndex * (100 / cardsToShow))}%)` }}>
                     {productsCategories.map((category: IProductCategory) => (
-                        <Link key={category.key} to={`/products?categories=${category.title}`} className="flex-shrink-0 w-1/5 p-6">
+                        <Link key={category.key} to={`/products?category=${category.title}`} className="flex-shrink-0 w-1/5 p-6">
                             <div className="bg-white border rounded-md shadow-md overflow-hidden">
                                 <img
                                     src={category.image}

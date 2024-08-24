@@ -2,7 +2,11 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import { IProductCategory, productsCategories } from '../constants';
 import { useState } from 'react';
 
-export const FilterBar = () => {
+interface FilterBarProps {
+	handleCategoryChange: (value: string) => void
+}
+
+export const FilterBar: React.FC<FilterBarProps> = ({ handleCategoryChange }) => {
 	const [isExpand, setIsExpand] = useState<{ category: boolean, price: boolean }>({ category: false, price: false });
 
 	const handleIconExpand = (fieldName: keyof typeof isExpand) => {
@@ -23,7 +27,10 @@ export const FilterBar = () => {
 						<MdKeyboardArrowDown size={20} />
 					</button>
 				</div>
-				<select className={`w-full mt-1 p-2 border border-gray-300 rounded text-gray-700 text-sm ${isExpand.category ? 'block' : 'hidden'} transition-all duration-500 ease-in-out`}>
+				<select
+					className={`w-full mt-1 p-2 border border-gray-300 rounded text-gray-700 text-sm ${isExpand.category ? 'block' : 'hidden'} transition-all duration-500 ease-in-out`}
+					onChange={(event) => handleCategoryChange(event.target.value)}
+				>
 					<option key='all' className='text-gray-700 text-sm' >All</option>
 					{productsCategories.map((item: IProductCategory) => (
 						<option key={item.key} className='text-gray-700 text-sm' >{item.title}</option>

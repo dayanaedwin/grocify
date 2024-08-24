@@ -1,24 +1,13 @@
-import { useEffect } from 'react';
-import { sortOptions } from '../constants';
+import { IProductDetails, sortOptions } from '../constants';
 import { ProductCard } from './ProductCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../store';
-import { fetchProducts } from '../thunks';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
+interface ProductListProps {
+    products: IProductDetails[];
+}
 
-export const ProductList = () => {
-    const dispatch = useDispatch<AppDispatch>();
-	const { products } = useSelector((state: RootState) => state.product);
-
-	useEffect(() => {
-		const fetchAllProducts = async () => {
-			dispatch(fetchProducts());
-		}
-
-		fetchAllProducts();
-	}, []);
-
-    console.log(products)
+export const ProductList: React.FC<ProductListProps> = ({ products }) => {
 
     return (
         <div className='w-3/4 py-4'>
@@ -32,7 +21,7 @@ export const ProductList = () => {
                 </select>
             </div>
             <div className='grid grid-cols-4 gap-4'>
-                {products.map((product) => (
+                {products.map((product: IProductDetails) => (
                     <ProductCard key={product._id} product={product} />
                 ))}
             </div>
