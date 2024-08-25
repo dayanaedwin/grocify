@@ -5,18 +5,23 @@ import { RootState } from '../store';
 
 interface ProductListProps {
     products: IProductDetails[];
+    sort: string;
+    onChange: (value: string) => void;
 }
 
-export const ProductList: React.FC<ProductListProps> = ({ products }) => {
+export const ProductList: React.FC<ProductListProps> = ({ products, sort, onChange }) => {
 
     return (
         <div className='w-3/4 py-4'>
             <div className='flex justify-between items-center mb-4'>
                 <h2 className='text-xl font-semibold'>Products</h2>
-                <select className='p-2 border border-gray-300 rounded text-gray-700 text-sm'>
+                <select
+                    value={sort}
+                    onChange={(event) => onChange(event.target.value)}
+                    className='p-2 border border-gray-300 rounded text-gray-700 text-sm'>
                     <option key='default' value='default' className='text-gray-700 text-sm' >Sort By</option>
                     {sortOptions.map((option: { key: string, value: string }) => (
-                        <option key={option.key} value={option.value} className='text-gray-700 text-sm' >{option.value}</option>
+                        <option key={option.key} value={option.key} className='text-gray-700 text-sm' >{option.value}</option>
                     ))}
                 </select>
             </div>

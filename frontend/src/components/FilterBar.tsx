@@ -5,9 +5,13 @@ import { useState } from 'react';
 interface FilterBarProps {
 	handleCategoryChange: (value: string) => void;
 	handlePriceChange: (value: number) => void;
+	filters: {
+		category: null | string,
+		price: null | number
+	};
 }
 
-export const FilterBar: React.FC<FilterBarProps> = ({ handleCategoryChange, handlePriceChange }) => {
+export const FilterBar: React.FC<FilterBarProps> = ({ handleCategoryChange, handlePriceChange, filters }) => {
 	const [isExpand, setIsExpand] = useState<{ category: boolean, price: boolean }>({ category: false, price: false });
 
 	const handleIconExpand = (fieldName: keyof typeof isExpand) => {
@@ -30,11 +34,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({ handleCategoryChange, hand
 				</div>
 				<select
 					className={`w-full mt-1 p-2 border border-gray-300 rounded text-gray-700 text-sm ${isExpand.category ? 'block' : 'hidden'} transition-all duration-500 ease-in-out`}
+					value={filters.category || 'All'}
 					onChange={(event) => handleCategoryChange(event.target.value)}
 				>
-					<option key='all' className='text-gray-700 text-sm' >All</option>
+					<option key='all' value='All' className='text-gray-700 text-sm' >All</option>
 					{productsCategories.map((item: IProductCategory) => (
-						<option key={item.key} className='text-gray-700 text-sm' >{item.title}</option>
+						<option key={item.key} value={item.title} className='text-gray-700 text-sm' >{item.title}</option>
 					))}
 				</select>
 			</div>
@@ -49,12 +54,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({ handleCategoryChange, hand
 						<MdKeyboardArrowDown size={20} />
 					</button>
 				</div>
-				<input 
-				type='range' 
-				className={`w-full mt-1 ${isExpand.price ? 'block' : 'hidden'}`} 
-				min={10} 
-                max={1000}
-				onChange={(event) => handlePriceChange(parseFloat(event.target.value))}
+				<input
+					type='range'
+					className={`w-full mt-1 ${isExpand.price ? 'block' : 'hidden'}`}
+					min={10}
+					max={1000}
+					onChange={(event) => handlePriceChange(parseFloat(event.target.value))}
 				/>
 			</div>
 		</div>
