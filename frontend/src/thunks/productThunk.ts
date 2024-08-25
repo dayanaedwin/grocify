@@ -28,7 +28,6 @@ export const fetchProductById = createAsyncThunk(
         try {
             const response = await axiosInstance.get(`${APIS.PRODUCTS}/${productId}`);
             const product = response.data;
-            console.log(product)
             const imageUrls = await Promise.all(product.images.map(getFirebaseImgURL));
             return { ...product, imageUrls };
         } catch (error: any) {

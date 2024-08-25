@@ -1,3 +1,4 @@
 export * from './authThunk';
-export * from './productThunks';
+export * from './cartThunk';
+export * from './productThunk';
 export * from './userThunk';
