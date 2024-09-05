@@ -40,7 +40,7 @@ const cartSlice = createSlice({
             state.error = action.payload;
         })
         .addCase(addToCart.fulfilled, (state, action: PayloadAction<ICartItem>) => {
-            state.cart.push(action.payload);
+            // state.cart.push(action.payload);
         })
         .addCase(addToCart.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;

@@ -6,6 +6,7 @@ import { IProductDetails } from "../slices";
 export interface ICartItem {
     _id: string,
     productDetails: IProductDetails,
+    imageUrls?: string[],
     quantity: number,
     createdAt: string,
     updatedAt: string
@@ -24,17 +25,18 @@ export const fetchCartItems = createAsyncThunk(
                 })
             );
             return cartWithImageUrls;
+            
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.error || 'Failed to fetch cart items');
         }
     }
 );
 
-export const addToCart = createAsyncThunk(
+export const addToCart = createAsyncThunk<any, { productId: string, quantity: number }>(
     `${APIS.CART}/addToCart`,
-    async (cartItems, { rejectWithValue }) => {
+    async (cartItem, { rejectWithValue }) => {
         try {
-            const response = await axiosInstance.post(APIS.CART, cartItems);
+            const response = await axiosInstance.post(APIS.CART, cartItem);
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.error || 'Failed to add item to cart');
@@ -44,7 +46,7 @@ export const addToCart = createAsyncThunk(
 
 export const updateCart = createAsyncThunk(
     `${APIS.CART}/updateCart`,
-    async (data, { rejectWithValue }) => {
+    async (data: { id: string; quantity: number }, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.put(APIS.CART, data);
             return response.data;

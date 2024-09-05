@@ -8,7 +8,7 @@ exports.getCartItems = async (req, res) => {
         const cartItems = await Cart.find({ userId }).populate('productId').lean();
 
         if (!cartItems || cartItems.length < 1) {
-            return res.status(404).json({ error: 'Cart is empty' });
+            return res.status(200).json({ data: [] });
         }
 
         const formattedCartItems = cartItems.map(item => {
@@ -21,7 +21,7 @@ exports.getCartItems = async (req, res) => {
             }
         });
 
-        res.status(200).json({ data: formattedCartItems });
+        res.status(200).json(formattedCartItems);
     } catch (error) {
         res.status(500).json({ error: 'Failed to get cart items' })
     }
@@ -76,7 +76,7 @@ exports.updateCartItem = async (req, res) => {
         const userId = req.userId;
         const { id, quantity } = req.body;
 
-        if (!quantity || quantity < 0) {
+        if (quantity === undefined || quantity < 0) {
             return res.status(400).json({ error: 'Quantity is invalid or negative' });
         }
 

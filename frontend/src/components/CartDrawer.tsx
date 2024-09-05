@@ -1,6 +1,10 @@
-import { cartItems, ICartItem } from '../constants';
+import { useEffect } from 'react';
+import { cartItems } from '../constants';
 import { CartItem } from './CartItem';
 import { IoChevronForward, IoClose } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCartItems, ICartItem } from '../thunks';
+import { AppDispatch, RootState } from '../store';
 
 interface CartDrawerProps {
     isOpen: boolean;
@@ -8,6 +12,14 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
+    const dispatch = useDispatch<AppDispatch>();
+    const { cart } = useSelector((state: RootState) => state.cart);
+
+    useEffect(() => {
+        if (isOpen) {
+            dispatch(fetchCartItems());
+        }
+    }, [isOpen]);
 
     return (
         <div className={`fixed inset-0 z-50 transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
@@ -20,7 +32,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                     </button>
                 </div>
                 <ul className="space-y-5 flex-grow overflow-y-auto">
-                    {cartItems.map((item: ICartItem) => (
+                    {cart.map((item: ICartItem) => (
                         <li key={item._id}>
                             <CartItem item={item} />
                         </li>

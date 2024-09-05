@@ -1,6 +1,8 @@
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../constants';
 
+const imageCache: { [key: string]: string } = {};
+
 export const convertDate = (date: string) => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
     return new Date(date).toLocaleDateString('en-IN', options);
@@ -61,7 +63,11 @@ export const handleStatus = (status: string) => {
 }
 
 export const getFirebaseImgURL = async (path: string) => {
+    if (imageCache[path]) {
+        return imageCache[path];
+    }
     const storageRef = ref(storage, encodeURI(path));
     const url = await getDownloadURL(storageRef);
+    imageCache[path] = url;
     return url;
 }
