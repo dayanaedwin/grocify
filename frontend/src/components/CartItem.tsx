@@ -1,8 +1,6 @@
-import { CiTrash } from 'react-icons/ci';
 import { fetchCartItems, ICartItem, updateCart } from '../thunks';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
-import { unwrapResult } from '@reduxjs/toolkit';
 
 interface CartItemsProps {
     item: ICartItem,

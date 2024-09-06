@@ -71,3 +71,7 @@ export const getFirebaseImgURL = async (path: string) => {
     imageCache[path] = url;
     return url;
 }
+
+export const isAddressEmpty = (address: any) => {
+    return !address || Object.values(address).every(value => !value);
+};

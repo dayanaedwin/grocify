@@ -5,8 +5,15 @@ export interface User {
     _id: string,
     name: string,
     email: string,
-    roles: string[]
-};
+    roles: string[],
+    address?: {
+        street: string,
+        city: string,
+        state: string,
+        pincode: number,
+        country: string,
+    }
+}
 
 interface UserState {
     user: User | null,

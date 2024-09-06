@@ -73,28 +73,31 @@ exports.addToCart = async (req, res) => {
 
 exports.updateCartItem = async (req, res) => {
     try {
-        const userId = req.userId;
-        const { id, quantity } = req.body;
+        let userId = new mongoose.Types.ObjectId(req.userId);
+        let { id, quantity } = req.body;
 
         if (quantity === undefined || quantity < 0) {
             return res.status(400).json({ error: 'Quantity is invalid or negative' });
         }
 
-        const cartItem = await Cart.findOne({ userId, _id: id });
+        const _id = new mongoose.Types.ObjectId(id);        
+
+        const cartItem = await Cart.findOne({ userId, _id });
 
         if (!cartItem) {
             return res.status(404).json({ error: 'Cart item not found' })
         }
 
         if (quantity === 0) { // If the quantity is 0, remove the item from the cart        
-            await Cart.deleteOne({ _id: id });
+            await Cart.deleteOne({ _id });
             return res.status(200).json({ message: 'Cart item removed' });
         } else {
-            cartItem.quantity = quantity;
-            await Cart.updateOne({ _id: id }, { $set: cartItem });
+            // cartItem.quantity = quantity;
+            await Cart.updateOne({ _id }, { $set: { quantity } });
             return res.status(200).json({ message: 'Cart item updated successfully' });
         }
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: 'Failed to update the cart' });
     }
 }

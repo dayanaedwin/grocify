@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { cartItems } from '../constants';
+import { RouteConstants } from '../constants';
 import { CartItem } from './CartItem';
 import { IoChevronForward, IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartItems, ICartItem } from '../thunks';
 import { AppDispatch, RootState } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 interface CartDrawerProps {
     isOpen: boolean;
@@ -12,8 +13,16 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { cart } = useSelector((state: RootState) => state.cart);
+
+    const navigateToCheckout = () => {
+        onClose();
+        if (cart && cart.length > 0) {
+            navigate(RouteConstants.checkout);
+        }
+    }
 
     useEffect(() => {
         if (isOpen) {
@@ -38,8 +47,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                         </li>
                     ))}
                 </ul>
-                <button onClick={onClose} className="flex justify-center items-center mt-4 bg-primary text-white font-semibold py-2 px-4 rounded border border-primary hover:bg-white hover:text-primary">
-                    {`${cartItems.length > 0 ? 'Proceed to Checkout' : 'Continue Shopping'}`}
+                <button onClick={navigateToCheckout} className="flex justify-center items-center mt-4 bg-primary text-white font-semibold py-2 px-4 rounded border border-primary hover:bg-white hover:text-primary">
+                    {`${(cart && cart.length > 0) ? 'Proceed to Checkout' : 'Continue Shopping'}`}
                     <IoChevronForward className='mt-1 ms-1 font-bold text-xl' />
                 </button>
             </div>
