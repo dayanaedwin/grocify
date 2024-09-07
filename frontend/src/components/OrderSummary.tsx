@@ -2,18 +2,16 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
 import { MdOutlineEdit } from 'react-icons/md';
-import { GoPlus } from "react-icons/go";
-import { isAddressEmpty } from '../helpers';
 
-export const OrderSummary = () => {
+interface IOrderSummary {
+    currentStep: number;
+    deliveryAddress: any;
+}
+
+export const OrderSummary: React.FC<IOrderSummary> = ({ currentStep, deliveryAddress }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const { cart } = useSelector((state: RootState) => state.cart);
-    const { user } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
-
-    const addAddress = () => {
-
-    }
 
     useEffect(() => {
         const total = cart.reduce((acc, item) => acc + (item.quantity * item.productDetails.price), 0);
@@ -27,13 +25,16 @@ export const OrderSummary = () => {
                 <div className="space-y-1">
                     <div className="flex justify-between">
                         <h6 className="pb-2 text-sm font-semibold">Deliver to</h6>
-                        {!isAddressEmpty(user?.address) && <button>
+                        <button>
                             <MdOutlineEdit size={15} className="mb-1" />
-                        </button>}
+                        </button>
                     </div>
-                    <p className='text-xs'>{user?.address?.street}</p>
-                    <p className='text-xs'>{user?.address?.city}, {user?.address?.state}, {user?.address?.country}</p>
-                    <p className='text-xs'>{user?.address?.pincode}</p>
+                    <p className='text-xs'>{deliveryAddress?.name}</p>
+                    <p className='text-xs'>{deliveryAddress?.building}</p>
+                    <p className='text-xs'>{deliveryAddress?.street}</p>
+                    <p className='text-xs'>{deliveryAddress?.city}, {deliveryAddress?.state}, {deliveryAddress?.country}</p>
+                    <p className='text-xs'>{deliveryAddress?.pincode}</p>
+                    <p className='text-xs'>{deliveryAddress?.phone}</p>
                 </div>
                 <hr />
                 <div className="">

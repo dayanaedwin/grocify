@@ -5,8 +5,11 @@ import { AppDispatch, RootState } from "../store";
 import { updateCart, fetchCartItems } from "../thunks";
 import { useEffect } from "react";
 
+interface ICheckoutList {
+    handleNext: () => void;
+}
 
-export const CheckoutList = () => {    
+export const CheckoutList: React.FC<ICheckoutList> = ({ handleNext }) => {
     const { cart } = useSelector((state: RootState) => state.cart);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -47,7 +50,7 @@ export const CheckoutList = () => {
                         <div className="flex space-x-2">
                             <button className="hover:text-primary" onClick={() => updateCartQuantity(product.quantity, product._id, '-')}><FiMinus /></button>
                             <p className="self-center text-black font-semibold">{product.quantity}</p>
-                            <button className="hover:text-primary" onClick={() => updateCartQuantity(product.quantity, product._id, '-')}><FiPlus /></button>
+                            <button className="hover:text-primary" onClick={() => updateCartQuantity(product.quantity, product._id, '+')}><FiPlus /></button>
                         </div>
                         <button className="self-center text-red-700"><MdDelete /></button>
 

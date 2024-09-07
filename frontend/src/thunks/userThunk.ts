@@ -13,3 +13,15 @@ export const getLoggedUser = createAsyncThunk(
         }
     }
 );
+
+export const updateUserInfo = createAsyncThunk(
+    `${APIS.GET_USER}/update`,
+    async (data: any, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.put(APIS.GET_USER, data);
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response.error);
+        }
+    }
+);

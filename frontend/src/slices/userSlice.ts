@@ -6,13 +6,17 @@ export interface User {
     name: string,
     email: string,
     roles: string[],
-    address?: {
+    addresses?: {
+        name: string,
+        phone: string,
+        building: string,
         street: string,
         city: string,
         state: string,
-        pincode: number,
+        pincode: string,
         country: string,
-    }
+        isDefault: boolean
+    }[]
 }
 
 interface UserState {

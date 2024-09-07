@@ -18,13 +18,37 @@ const UserSchema = new mongoose.Schema({
         type: [String],
         default: ['user'], // Other roles can be 'admin', 'vendor'.
     },
-    address: {
-        street: String,
-        city: String,
-        state: String,
-        pincode: Number,
-        country: String,
-    }
+    addresses: [
+        {
+            name: {
+                type: String
+            },
+            phone: {
+                type: Number
+            },
+            building: {
+                type: String
+            },
+            street: {
+                type: String
+            },
+            city: {
+                type: String
+            },
+            state: {
+                type: String
+            },
+            pincode: {
+                type: Number
+            },
+            country: {
+                type: String
+            },
+            isDefault: {
+                type: Boolean
+            }
+        }
+    ]
 }, { timestamps: true });
 
 const User = mongoose.model('User', UserSchema);
