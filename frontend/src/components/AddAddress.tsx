@@ -5,12 +5,11 @@ import { useState } from "react";
 import { AddNewAddressDrawer } from "./AddNewAddressDrawer";
 
 interface IAddAdress {
-    handleNext: () => void;
     deliveryAddress: any;
     setDeliveryAddress: React.Dispatch<any>;
 }
 
-export const AddAddress: React.FC<IAddAdress> = ({ handleNext, deliveryAddress, setDeliveryAddress }) => {
+export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, setDeliveryAddress }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
     const { user } = useSelector((state: RootState) => state.user);

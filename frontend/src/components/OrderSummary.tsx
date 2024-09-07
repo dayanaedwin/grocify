@@ -4,14 +4,25 @@ import { AppDispatch, RootState } from '../store';
 import { MdOutlineEdit } from 'react-icons/md';
 
 interface IOrderSummary {
+    paymentMode: string;
     currentStep: number;
+    handleNext: () => void;
     deliveryAddress: any;
 }
 
-export const OrderSummary: React.FC<IOrderSummary> = ({ currentStep, deliveryAddress }) => {
+export const OrderSummary: React.FC<IOrderSummary> = ({ paymentMode, currentStep, handleNext, deliveryAddress }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const { cart } = useSelector((state: RootState) => state.cart);
     const dispatch = useDispatch<AppDispatch>();
+
+    const handleStepNavigation = () => {
+        if (currentStep === 3) {
+            //create order
+            //navigate to order details page with orderId;
+        } else {
+            handleNext();
+        }
+    }
 
     useEffect(() => {
         const total = cart.reduce((acc, item) => acc + (item.quantity * item.productDetails.price), 0);
@@ -22,7 +33,7 @@ export const OrderSummary: React.FC<IOrderSummary> = ({ currentStep, deliveryAdd
         <div className='w-5/12 space-y-4 py-10'>
             <h6 className="text-md font-semibold">Order Summary</h6>
             <div className="flex flex-col border border-gray-30 rounded-md space-y-4 p-4">
-                <div className="space-y-1">
+                {deliveryAddress && <div className="space-y-1">
                     <div className="flex justify-between">
                         <h6 className="pb-2 text-sm font-semibold">Deliver to</h6>
                         <button>
@@ -35,7 +46,7 @@ export const OrderSummary: React.FC<IOrderSummary> = ({ currentStep, deliveryAdd
                     <p className='text-xs'>{deliveryAddress?.city}, {deliveryAddress?.state}, {deliveryAddress?.country}</p>
                     <p className='text-xs'>{deliveryAddress?.pincode}</p>
                     <p className='text-xs'>{deliveryAddress?.phone}</p>
-                </div>
+                </div>}
                 <hr />
                 <div className="">
                     <h6 className="pb-2 text-sm font-semibold">Products</h6>
@@ -51,8 +62,16 @@ export const OrderSummary: React.FC<IOrderSummary> = ({ currentStep, deliveryAdd
                     <h6 className='text-sm font-semibold'>Total</h6>
                     <p className='text-sm font-semibold'>₹ {totalPrice}</p>
                 </div>
+                {paymentMode &&
+                    <div>
+                        <hr />
+                        <div className="flex justify-between pt-4">
+                            <h6 className='text-sm font-semibold'>Payment Mode</h6>
+                            <p className='text-sm font-semibold'>{paymentMode}</p>
+                        </div>
+                    </div>}
             </div>
-            <button className='w-full border border-primary bg-primary text-white rounded-md py-2 font-semibold hover:text-primary hover:bg-white'>Order Now</button>
+            <button onClick={handleStepNavigation} className='w-full border border-primary bg-primary text-white rounded-md py-2 font-semibold hover:text-primary hover:bg-white'>{currentStep === 3 ? 'Order Now' : 'Proceed'}</button>
         </div>
     )
 }

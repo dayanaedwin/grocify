@@ -46,6 +46,9 @@ const OrderSchema = new mongoose.Schema({
         pincode: Number,
         country: String,
     },
+    paymentMode: {
+        type: String,
+    },
     paymentStatus: {
         type: String,
         default: 'pending',

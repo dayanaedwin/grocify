@@ -4,6 +4,7 @@ import { OrderSummary, Review } from "../components";
 export const Checkout = () => {
 	const [deliveryAddress, setDeliveryAddress] = useState<any>({});
 	const [currentStep, setCurrentStep] = useState<number>(1);
+	const [selectedPaymentMode, setSelectedPaymentMode] = useState<string>('');
 
 	const handleNext = () => {
 		if (currentStep < 3) {
@@ -17,10 +18,14 @@ export const Checkout = () => {
 		}
 	};
 
+    const handlePaymentModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedPaymentMode(event.target.value);
+    };
+
 	return (
 		<div className="flex px-32 space-x-20">
-			<Review currentStep={currentStep} handleNext={handleNext} handleBack={handleBack} deliveryAddress={deliveryAddress} setDeliveryAddress={setDeliveryAddress} />
-			<OrderSummary currentStep={currentStep} deliveryAddress={deliveryAddress} />
+			<Review selectedPaymentMode={selectedPaymentMode} handlePaymentModeChange={handlePaymentModeChange} currentStep={currentStep} handleBack={handleBack} deliveryAddress={deliveryAddress} setDeliveryAddress={setDeliveryAddress} />
+			<OrderSummary paymentMode={selectedPaymentMode} currentStep={currentStep} handleNext={handleNext} deliveryAddress={deliveryAddress} />
 		</div>
 	);
 };

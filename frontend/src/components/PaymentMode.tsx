@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { paymentModes } from "../constants";
 
-export const PaymentMode = () => {
-    const [selectedPaymentMode, setSelectedPaymentMode] = useState<string>('');
+interface IPaymentMode {
+    selectedPaymentMode: string;
+    handlePaymentModeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-    const handlePaymentModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedPaymentMode(event.target.value);
-    };
-
+export const PaymentMode: React.FC<IPaymentMode> = ({selectedPaymentMode, handlePaymentModeChange}) => {
     return (
         <div className="space-y-4">
             <h6 className="text-lg font-semibold">Select Payment Mode</h6>
@@ -26,9 +25,6 @@ export const PaymentMode = () => {
                         <span className={`text-sm ${mode.value !== 'Cash on Delivery' ? 'text-gray-500' : ''}`}>{mode.label}</span>
                     </label>
                 ))}
-            </div>
-            <div className="flex justify-center">
-                <button className="text-primary font-semibold border border-primary px-20 py-2 rounded-md">{`${selectedPaymentMode === 'Cash on Delivery' ? 'Place Order' : 'Pay Now'}`}</button>
             </div>
         </div>
     )

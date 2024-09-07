@@ -5,11 +5,7 @@ import { AppDispatch, RootState } from "../store";
 import { updateCart, fetchCartItems } from "../thunks";
 import { useEffect } from "react";
 
-interface ICheckoutList {
-    handleNext: () => void;
-}
-
-export const CheckoutList: React.FC<ICheckoutList> = ({ handleNext }) => {
+export const CheckoutList = () => {
     const { cart } = useSelector((state: RootState) => state.cart);
     const dispatch = useDispatch<AppDispatch>();
 

@@ -59,7 +59,7 @@ exports.createUserOrder = async (req, res) => {
 
     try {
         const userId = req.userId;
-        const { products, deliveryAddress } = req.body;
+        const { products, deliveryAddress, paymentMode } = req.body;
 
         if (!products || products.length === 0) {
             await session.abortTransaction();
@@ -90,7 +90,7 @@ exports.createUserOrder = async (req, res) => {
 
         const totalPrice = products.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-        const newOrder = new Order({ userId, products, totalPrice, deliveryAddress });
+        const newOrder = new Order({ userId, products, totalPrice, deliveryAddress, paymentMode });
         const createdOrder = await newOrder.save({ session });
 
         if (!createdOrder) {
