@@ -26,7 +26,7 @@ export const CheckoutList = () => {
     return (
         <div className="space-y-4">
             <h6 className="text-lg font-semibold">Review</h6>
-            {cart.map((product: any) => (
+            {(cart && cart.length > 0) ? cart.map((product: any) => (
                 <div className="flex justify-between space-x-4 border border-gray-30 rounded-md p-4">
                     <div className="flex space-x-4">
                         <img
@@ -52,7 +52,12 @@ export const CheckoutList = () => {
 
                     </div>
                 </div>
-            ))}
+            )) :
+                <div className="">
+                    <p>Cart is empty</p>
+                    <button>Continue Shopping</button>
+                </div>
+            }
         </div>
     )
 }

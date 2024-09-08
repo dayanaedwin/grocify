@@ -5,15 +5,13 @@ import { PaymentMode } from "./PaymentMode";
 import { StepProgressBar } from "./StepProgressBar";
 
 interface IReview {
-    selectedPaymentMode: string;
-    handlePaymentModeChange: (event: React.ChangeEvent<HTMLInputElement>) => void
     currentStep: number;
     handleBack: () => void;
-    deliveryAddress: any;
-    setDeliveryAddress: React.Dispatch<any>;
+    orderInfo: any;
+    updateOrderInfo: (key: string, data: any) => void;
 }
 
-export const Review: React.FC<IReview> = ({ selectedPaymentMode, handlePaymentModeChange, currentStep, handleBack, deliveryAddress, setDeliveryAddress }) => {
+export const Review: React.FC<IReview> = ({ currentStep, handleBack, orderInfo, updateOrderInfo }) => {
 
     return (
         <div className="w-7/12">
@@ -21,8 +19,8 @@ export const Review: React.FC<IReview> = ({ selectedPaymentMode, handlePaymentMo
             {currentStep === 1 ?
                 <CheckoutList /> :
                 (currentStep === 2 ?
-                    <AddAddress deliveryAddress={deliveryAddress} setDeliveryAddress={setDeliveryAddress} /> :
-                    <PaymentMode selectedPaymentMode={selectedPaymentMode} handlePaymentModeChange={handlePaymentModeChange} />
+                    <AddAddress deliveryAddress={orderInfo.deliveryAddress} updateOrderInfo={updateOrderInfo} /> :
+                    <PaymentMode paymentMode={orderInfo.paymentMode} updateOrderInfo={updateOrderInfo} />
                 )
 
             }

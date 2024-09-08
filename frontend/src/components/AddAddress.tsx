@@ -6,10 +6,10 @@ import { AddNewAddressDrawer } from "./AddNewAddressDrawer";
 
 interface IAddAdress {
     deliveryAddress: any;
-    setDeliveryAddress: React.Dispatch<any>;
+    updateOrderInfo: (key: string, data: any[]) => void;
 }
 
-export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, setDeliveryAddress }) => {
+export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, updateOrderInfo }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
     const { user } = useSelector((state: RootState) => state.user);
@@ -22,10 +22,6 @@ export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, setDeliveryA
     const updateAddress = (index: number) => {
         setSelectedAddressIndex(index);
         setIsOpen(true);
-    }
-
-    const handleDeliveryAddress = (address: any) => {
-        setDeliveryAddress(address);
     }
 
     return (
@@ -52,7 +48,7 @@ export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, setDeliveryA
                             <p className='text-xs'>Phone: {address?.phone}</p>
                             <div className="flex pt-2">
                                 <button onClick={() => updateAddress(index)} className="text-xs border font-semibold text-gray-700 px-2 py-1 rounded-sm me-4">Edit</button>
-                                <button onClick={() => handleDeliveryAddress(address)} className="text-xs text-primary border border-primary rounded-sm px-2 py-1 font-semibold">Deliver here</button>
+                                <button onClick={() => updateOrderInfo('deliveryAddress', address)} className="text-xs text-primary border border-primary rounded-sm px-2 py-1 font-semibold">Deliver here</button>
                             </div>
                         </div>
                     ))}

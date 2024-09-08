@@ -2,11 +2,16 @@ import { useState } from "react";
 import { paymentModes } from "../constants";
 
 interface IPaymentMode {
-    selectedPaymentMode: string;
-    handlePaymentModeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    paymentMode: string;
+    updateOrderInfo: (key: string, data: any) => void;
 }
 
-export const PaymentMode: React.FC<IPaymentMode> = ({selectedPaymentMode, handlePaymentModeChange}) => {
+export const PaymentMode: React.FC<IPaymentMode> = ({paymentMode, updateOrderInfo}) => {
+    
+    const handlePaymentModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		updateOrderInfo('paymentMode', event.target.value);
+	};
+
     return (
         <div className="space-y-4">
             <h6 className="text-lg font-semibold">Select Payment Mode</h6>
@@ -17,7 +22,7 @@ export const PaymentMode: React.FC<IPaymentMode> = ({selectedPaymentMode, handle
                             type="radio"
                             name="paymentMode"
                             value={mode.value}
-                            checked={selectedPaymentMode === mode.value}
+                            checked={paymentMode === mode.value}
                             disabled={mode.value !== 'Cash on Delivery'}
                             onChange={handlePaymentModeChange}
                             className='mr-2 text-primary'
