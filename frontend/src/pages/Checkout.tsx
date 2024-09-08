@@ -37,7 +37,7 @@ export const Checkout = () => {
 		if (products) {
 			updateOrderInfo('products', products);
 		}
-	}, []);
+	}, [cart]);
 
 	return (
 		<div className="flex px-32 space-x-20">

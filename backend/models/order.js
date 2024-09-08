@@ -40,11 +40,13 @@ const OrderSchema = new mongoose.Schema({
         default: 'pending'
     },
     deliveryAddress: {
+        name: String,
+        phone: String,
         street: String,
         city: String,
         state: String,
-        pincode: Number,
         country: String,
+        pincode: Number,
     },
     paymentMode: {
         type: String,

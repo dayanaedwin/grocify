@@ -18,7 +18,6 @@ export const OrderSummary: React.FC<IOrderSummary> = ({ orderInfo, currentStep, 
 
     const handleStepNavigation = () => {
         if (currentStep === 3) {
-            //create order
             //navigate to order details page with orderId;
         } else {
             handleNext();
@@ -27,13 +26,12 @@ export const OrderSummary: React.FC<IOrderSummary> = ({ orderInfo, currentStep, 
 
     useEffect(() => {
         const stepConditions: any = {
-            1: orderInfo.products.length > 0,
+            1: !(orderInfo.products.length > 0),
             2: isAddressEmpty(orderInfo.deliveryAddress),
             3: !Boolean(orderInfo.paymentMode),
         };
         setDisabled(stepConditions[currentStep]);
     }, [currentStep, orderInfo.products.length, orderInfo.deliveryAddress, orderInfo.paymentMode]);
-
 
     useEffect(() => {
         const total = cart.reduce((acc, item) => acc + (item.quantity * item.productDetails.price), 0);
