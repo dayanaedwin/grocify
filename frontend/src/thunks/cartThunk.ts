@@ -25,7 +25,7 @@ export const fetchCartItems = createAsyncThunk(
                 })
             );
             return cartWithImageUrls;
-            
+
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.error || 'Failed to fetch cart items');
         }
@@ -56,14 +56,26 @@ export const updateCart = createAsyncThunk(
     }
 );
 
-export const deleteCartItem = createAsyncThunk(
+export const deleteCartItemById = createAsyncThunk(
     `${APIS.CART}/deleteCartItem`,
-    async (id, { rejectWithValue }) => {
+    async (id: string, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.delete(`${APIS.CART}/${id}`);
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.error || 'Failed to delete cart item');
+        }
+    }
+);
+
+export const deleteAllCartItems = createAsyncThunk(
+    `${APIS.CART}/deleteAll`,
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.delete(APIS.CART);
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data?.error || 'Failed to delete cart items');
         }
     }
 )

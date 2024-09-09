@@ -24,4 +24,5 @@ export { ProductImageGallery } from './ProductImageGallery';
 export { Profile } from './Profile';
 export { Rating } from './Rating';
 export { Review } from './Review';
-export { StepProgressBar } from './StepProgressBar'
+export { StepProgressBar } from './StepProgressBar';
+export { Modal } from './Modal';

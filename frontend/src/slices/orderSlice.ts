@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createOrder, getOrder, getOrderById, IOrderData } from "../thunks";
+import { createOrder, getAllOrders, getOrderById, IOrderData } from "../thunks";
 
 interface orderState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -34,15 +34,15 @@ const orderSlice = createSlice({
                 state.error = action.payload;
             })
 
-            .addCase(getOrder.pending, (state) => {
+            .addCase(getAllOrders.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
             })
-            .addCase(getOrder.fulfilled, (state, action: PayloadAction<IOrderData[]>) => {
+            .addCase(getAllOrders.fulfilled, (state, action: PayloadAction<IOrderData[]>) => {
                 state.orders = action.payload;
                 state.status = 'succeeded';
             })
-            .addCase(getOrder.rejected, (state, action: PayloadAction<any>) => {
+            .addCase(getAllOrders.rejected, (state, action: PayloadAction<any>) => {
                 state.status = 'failed';
                 state.error = action.payload;
             })

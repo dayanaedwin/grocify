@@ -9,18 +9,7 @@ exports.getMyOrders = async (req, res) => {
         if (!orders || orders.length < 1) {
             return res.status(404).json({ error: 'Order not found' });
         }
-
-        const formattedOrders = orders.map(order =>
-            order.products.map(product => {
-                return {
-                    quantity: product.quantity,
-                    price: product.price,
-                    currency: product.currency,
-                    productDetails: product.productId
-                }
-            })
-        );
-        res.status(200).json({ data: formattedOrders });
+        res.status(200).send(orders);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -47,7 +36,7 @@ exports.getMyOrderById = async (req, res) => {
                 }
             })
         };
-        res.status(200).json({ data: formattedOrders });
+        res.status(200).send(formattedOrders);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }

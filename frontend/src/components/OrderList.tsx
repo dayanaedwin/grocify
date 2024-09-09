@@ -1,15 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { deliveryStatus, IDeliveryStatus, IOrderDateFilter, orderDateFilter, orders, RouteConstants } from "../constants";
-import { convertDate, handleStatus, handleStatusBgColor, handleStatusColor } from "../helpers";
+import { convertDate, filterOrdersByDateRange, handleStatus, handleStatusBgColor, handleStatusColor } from "../helpers";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../store";
+import { getAllOrders } from "../thunks";
 
 export const OrderList = () => {
     const [selected, setSelected] = useState({ status: 0, dateRange: 0 });
+    const { orders } = useSelector((state: RootState) => state.order);
+    const [orderList, setOrderList] = useState(orders);
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSelected = (key: keyof typeof selected, index: number) => {
         setSelected((prev) => ({ ...prev, [key]: index }));
-    }
+    };
+
+    useEffect(() => {
+        dispatch(getAllOrders());
+    }, [dispatch]);
+
+    useEffect(() => {
+        const selectedStatus = deliveryStatus[selected.status].status;
+        const statusFilteredOrders = selectedStatus.includes("all")
+            ? orders
+            : orders.filter(order => selectedStatus.includes(order.orderStatus));
+
+        setOrderList(filterOrdersByDateRange(statusFilteredOrders, selected.dateRange));
+    }, [orders, selected.dateRange, selected.status]);
 
     return (
         <div className="w-3/4 space-y-4">
@@ -29,7 +48,10 @@ export const OrderList = () => {
                     ))}
                 </div>
                 <div>
-                    <select className="rounded-full border bg-gray-100 text-gray-500 px-2 py-1 text-xs">
+                    <select
+                        value={selected.dateRange}
+                        onChange={(e) => handleSelected('dateRange', Number(e.target.value))}
+                        className="rounded-full border bg-gray-100 text-gray-500 px-2 py-1 text-xs">
                         {orderDateFilter.map((item: IOrderDateFilter, index: number) => (
                             <option key={item.key} value={item.name}>{item.name}</option>
                         ))}
@@ -37,7 +59,7 @@ export const OrderList = () => {
                 </div>
             </div>
             <div className="space-y-4">
-                {orders.map((order: any, index: number) => (
+                {orderList.map((order: any, index: number) => (
                     <Link key={order._id} to={`${RouteConstants.orders_root}/${order._id}`} className="p-4 border border-gray-300 rounded-lg flex justify-between cursor-pointer hover:shadow-lg" >
                         <div className="space-y-2">
                             <div className="flex space-x-2 text-gray-500 text-sm">
@@ -51,8 +73,8 @@ export const OrderList = () => {
                             <div className="flex space-x-4">
                                 <div className="relative">
                                     <img
-                                        src={`data:image/png;base64,${order.products[0].productDetails.images[0]}`}
-                                        alt={order.products[0].productDetails.name}
+                                        src={order.products[0].productId.imageUrls ? order.products[0].productId.imageUrls[0] : ''}
+                                        alt={order.products[0].productId.name}
                                         className='w-16 rounded-lg'
                                     />
                                     {order.products.length > 1 &&
@@ -65,8 +87,8 @@ export const OrderList = () => {
 
                                 <div className="space-y-1">
                                     <h6 className="text-primary font-semibold text-sm">Order ID: {order._id}</h6>
-                                    <p className="text-xs font-semibold text-gray-700">{`${order.products[0].productDetails.name} ${order.products.length > 1 ? `& ${order.products.length - 1} more items` : ''}`}</p>
-                                    <p className="text-sm font-semibold text-black">₹ {order.products[0].productDetails.price}</p>
+                                    <p className="text-xs font-semibold text-gray-700">{`${order.products[0].productId.name} ${order.products.length > 1 ? `& ${order.products.length - 1} more items` : ''}`}</p>
+                                    <p className="text-sm font-semibold text-black">₹ {order.totalPrice}</p>
                                 </div>
                             </div>
                         </div>

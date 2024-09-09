@@ -1,63 +1,83 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { APIS } from "../constants";
-import { axiosInstance } from "../helpers";
+import { axiosInstance, getFirebaseImgURL } from "../helpers";
+import { IProductDetails } from "../slices";
 
 export interface IOrderData {
     _id: string;
     userId: string;
     products: {
-        productId: string;
+        productDetails: IProductDetails;
         quantity: number;
         price: number,
         currency: string;
     }[];
     totalPrice: number;
     orderStatus: string;
-    deliveryAddress: {
-        name: String;
-        phone: Number;
-        street: String;
-        city: String;
-        state: String;
-        pincode: Number;
-        country: String;
+    deliveryAddress?: {
+        name: string;
+        phone: number;
+        building: string;
+        street: string;
+        city: string;
+        state: string;
+        pincode: number;
+        country: string;
     },
     paymentMode: string;
     paymentStatus: string;
+    createdAt: string;
 }
 
-export const createOrder = createAsyncThunk(
+export const createOrder = createAsyncThunk<any, IOrderData>(
     `${APIS.MY_ORDER}/create`,
     async (data, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.post(APIS.MY_ORDER, data);
             return response.data;
         } catch (error: any) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data?.error || 'Failed to create order');
         }
     }
 );
 
-export const getOrder = createAsyncThunk(
+export const getAllOrders = createAsyncThunk(
     `${APIS.MY_ORDER}/get`,
     async (_, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.get(APIS.MY_ORDER);
-            return response.data;
-        } catch (error) {
-            return rejectWithValue(error);
+            const orders = response.data;
+            const ordersWithImageUrls = await Promise.all(
+                orders.map(async (orderGroup: any) => {
+                    const order = { ...orderGroup };
+                    if (order.products[0].productId.images.length > 0) {
+                        const firstImage = order.products[0].productId.images[0];
+                        const imageUrls = await getFirebaseImgURL(firstImage);
+                        order.products[0].productId = { ...order.products[0].productId, imageUrls: [imageUrls] };
+                    }
+                    return order;
+                })
+            );
+            return ordersWithImageUrls;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data?.error || 'Failed to fetch order');
         }
     }
 );
 
-export const getOrderById = createAsyncThunk(
+export const getOrderById = createAsyncThunk<any, string>(
     `${APIS.MY_ORDER}/getById`,
-    async (orderId, { rejectWithValue }) => {
+    async (orderId: string, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.get(`${APIS.MY_ORDER}/${orderId}`);
-            return response.data;
+            const order = response.data;
+            const ordersWithImageUrls = await Promise.all(order.products.map(async (product: any) => {
+                const imageUrls = [await getFirebaseImgURL(product.productDetails.images[0])];
+                return { ...product, imageUrls };
+            }));
+            return ordersWithImageUrls;
         } catch (error: any) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data?.error || 'Failed to get order');
         }
     }
 )

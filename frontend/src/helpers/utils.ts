@@ -1,5 +1,6 @@
 import { getDownloadURL, ref } from 'firebase/storage';
-import { storage } from '../constants';
+import { orderDateFilter, storage } from '../constants';
+import { subMonths, differenceInDays } from 'date-fns';
 
 const imageCache: { [key: string]: string } = {};
 
@@ -74,4 +75,22 @@ export const getFirebaseImgURL = async (path: string) => {
 
 export const isAddressEmpty = (address: any) => {
     return !address || Object.values(address).every(value => !value);
+};
+
+export const filterOrdersByDateRange = (orders: any[], selectedRange: number) => {
+    const currentDate = new Date();
+
+    switch (orderDateFilter[selectedRange].name) {
+        case 'Last 30 days':
+            return orders.filter(order => differenceInDays(currentDate, new Date(order.createdAt)) <= 30);
+        case 'Last 3 months':
+            return orders.filter(order => new Date(order.createdAt) >= subMonths(currentDate, 3));
+        case '2024':
+            return orders.filter(order => new Date(order.createdAt).getFullYear() === 2024);
+        case 'Older':
+            return orders.filter(order => new Date(order.createdAt).getFullYear() < 2024);
+        case 'All':
+        default:
+            return orders;
+    }
 };

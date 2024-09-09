@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProductDetails } from "./productSlice";
-import { addToCart, deleteCartItem, fetchCartItems, updateCart } from "../thunks";
+import { addToCart, deleteAllCartItems, deleteCartItemById, fetchCartItems, updateCart } from "../thunks";
 
 export interface ICartItem {
     _id: string,
@@ -39,11 +39,19 @@ const cartSlice = createSlice({
             state.status = 'failed';
             state.error = action.payload;
         })
+
+        .addCase(addToCart.pending, (state) => {
+            state.status = 'loading';
+        })
         .addCase(addToCart.fulfilled, (state, action: PayloadAction<ICartItem>) => {
             // state.cart.push(action.payload);
         })
         .addCase(addToCart.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
+        })
+
+        .addCase(updateCart.pending, (state) => {
+            state.status = 'loading';
         })
         .addCase(updateCart.fulfilled, (state, action: PayloadAction<ICartItem>) => {
             const index = state.cart.findIndex(item => item._id === action.payload._id);
@@ -54,10 +62,24 @@ const cartSlice = createSlice({
         .addCase(updateCart.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
         })
-        .addCase(deleteCartItem.fulfilled, (state, action: PayloadAction<{ id: string }>) => {
+        
+        .addCase(deleteCartItemById.pending, (state) => {
+            state.status = 'loading';
+        })
+        .addCase(deleteCartItemById.fulfilled, (state, action: PayloadAction<{ id: string }>) => {
             state.cart = state.cart.filter(item => item._id !== action.payload.id);
         })
-        .addCase(deleteCartItem.rejected, (state, action: PayloadAction<any>) => {
+        .addCase(deleteCartItemById.rejected, (state, action: PayloadAction<any>) => {
+            state.error = action.payload;
+        })
+
+        .addCase(deleteAllCartItems.pending, (state) => {
+            state.status = 'loading';
+        })
+        .addCase(deleteAllCartItems.fulfilled, (state, action: PayloadAction<{ id: string }>) => {
+            state.cart = state.cart.filter(item => item._id !== action.payload.id);
+        })
+        .addCase(deleteAllCartItems.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
         });
     },

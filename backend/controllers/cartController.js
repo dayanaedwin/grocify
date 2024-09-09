@@ -120,3 +120,14 @@ exports.deleteCartItem = async (req, res) => {
         res.status(500).json({ error: 'Failed to delete the cart item' });
     }
 }
+
+exports.deleteAllCartItems = async (req, res) => {
+    try {
+        const userId = req.userId;
+
+        await Cart.deleteMany({ userId });
+        res.status(200).json({ message: 'All cart items deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete the cart items' });
+    }
+}

@@ -2,7 +2,7 @@ import { MdDelete } from "react-icons/md";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
-import { updateCart, fetchCartItems } from "../thunks";
+import { updateCart, fetchCartItems, deleteCartItemById } from "../thunks";
 import { useEffect } from "react";
 
 export const CheckoutList = () => {
@@ -17,6 +17,15 @@ export const CheckoutList = () => {
         } catch (error) {
             console.error('Failed to update cart item:', error);
         }
+    }
+
+    const handleDeleteCartItem = (id: string) => {
+        try {
+            dispatch(deleteCartItemById(id));
+            dispatch(fetchCartItems());
+        } catch (error) {
+            console.error('Failed to delete cart item:', error);
+        }        
     }
 
     useEffect(() => {
@@ -48,7 +57,7 @@ export const CheckoutList = () => {
                             <p className="self-center text-black font-semibold">{product.quantity}</p>
                             <button className="hover:text-primary" onClick={() => updateCartQuantity(product.quantity, product._id, '+')}><FiPlus /></button>
                         </div>
-                        <button className="self-center text-red-700"><MdDelete /></button>
+                        <button onClick={() => handleDeleteCartItem(product._id)} className="self-center text-red-700"><MdDelete /></button>
 
                     </div>
                 </div>
