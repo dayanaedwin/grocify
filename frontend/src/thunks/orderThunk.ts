@@ -71,11 +71,11 @@ export const getOrderById = createAsyncThunk<any, string>(
         try {
             const response = await axiosInstance.get(`${APIS.MY_ORDER}/${orderId}`);
             const order = response.data;
-            const ordersWithImageUrls = await Promise.all(order.products.map(async (product: any) => {
+            const productsWithImageUrls = await Promise.all(order.products.map(async (product: any) => {
                 const imageUrls = [await getFirebaseImgURL(product.productDetails.images[0])];
                 return { ...product, imageUrls };
             }));
-            return ordersWithImageUrls;
+            return {...order, products: productsWithImageUrls};
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.error || 'Failed to get order');
         }

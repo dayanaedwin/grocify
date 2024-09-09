@@ -10,7 +10,7 @@ export const DeliveryItemCard: React.FC<DeliveryItemCardProps> = ({ product }) =
             <div className="flex justify-between items-center p-4">
                 <div className="flex space-x-2 text-sm text-gray-700">
                     <img
-                        src={`data:image/png;base64,${product.productDetails.images[0]}`}
+                        src={product.imageUrls[0] ? product.imageUrls[0] : ''}
                         alt={product.productDetails.name}
                         className="w-16 object-cover rounded-md"
                     />
@@ -25,7 +25,7 @@ export const DeliveryItemCard: React.FC<DeliveryItemCardProps> = ({ product }) =
                     </div>
                 </div>
                 <div className="">
-                    <h2 className="text-md text-red-700 font-bold">₹ {product.price}</h2>
+                    <h2 className="text-md text-red-700 font-bold">₹ {product.productDetails.price * product.quantity}</h2>
                 </div>
             </div>
             <div className="border-t py-2">

@@ -19,6 +19,8 @@ export const OrderDetails = () => {
 		}
 	}, [id]);
 
+	console.log(order);
+
 	return (
 		<div className='flex flex-col overflow-y-auto py-12 px-32 space-y-4'>
 			{/* Breadcrumb for navigation - use a common component */}
@@ -38,7 +40,7 @@ export const OrderDetails = () => {
 				<div className="space-y-4 w-2/3">
 					<h3 className="text-lg font-semibold text-gray-700">Items Ordered</h3>
 					{/* Order Status Progress Bar */}
-					{order?.products.map((products: any) => (<DeliveryItemCard product={products} />))}
+					{order?.products?.map((products: any) => (<DeliveryItemCard product={products} />))}
 				</div>
 				<div className="text-md text-gray-700 font-semibold space-y-8 w-1/3">
 					{order?.deliveryAddress && (<div className="space-y-2">
