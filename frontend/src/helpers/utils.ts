@@ -12,7 +12,9 @@ export const convertDate = (date: string) => {
 export const handleStatusColor = (status: string) => {
     let className = ''
     switch (status) {
-        case 'pending' || 'processing' || 'shipped':
+        case 'placed':
+        case 'processing':
+        case 'shipped':
             className = 'bg-orange-100 text-orange-500';
             break;
         case 'delivered':
@@ -30,7 +32,9 @@ export const handleStatusColor = (status: string) => {
 export const handleStatusBgColor = (status: string) => {
     let className = ''
     switch (status) {
-        case 'pending' || 'processing' || 'shipped':
+        case 'placed':
+        case 'processing':
+        case 'shipped':
             className = 'bg-orange-500';
             break;
         case 'delivered':
@@ -48,7 +52,9 @@ export const handleStatusBgColor = (status: string) => {
 export const handleStatus = (status: string) => {
     let statusName = ''
     switch (status) {
-        case 'pending' || 'processing' || 'shipped':
+        case 'placed':
+        case 'processing':
+        case 'shipped':
             statusName = 'In Progress';
             break;
         case 'delivered':
@@ -92,5 +98,20 @@ export const filterOrdersByDateRange = (orders: any[], selectedRange: number) =>
         case 'All':
         default:
             return orders;
+    }
+};
+
+export const getCurrentStep = (orderStatus: string) => {
+    switch (orderStatus) {
+        case 'placed':
+            return 0;
+        case 'processing':
+            return 1;
+        case 'shipped':
+            return 2;
+        case 'delivered':
+            return 3;
+        default:
+            return 0;
     }
 };

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { orders } from "../constants";
 import { useEffect, useState } from "react";
-import { AddressCard, PaymentDetails, DeliveryItemCard } from "../components";
+import { AddressCard, PaymentDetails, DeliveryItemCard, StaticStepProgressBar } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { getOrderById } from "../thunks";
@@ -18,8 +18,6 @@ export const OrderDetails = () => {
 			dispatch(getOrderById(id));
 		}
 	}, [id]);
-
-	console.log(order);
 
 	return (
 		<div className='flex flex-col overflow-y-auto py-12 px-32 space-y-4'>
@@ -39,7 +37,7 @@ export const OrderDetails = () => {
 			<div className="flex w-full space-x-8">
 				<div className="space-y-4 w-2/3">
 					<h3 className="text-lg font-semibold text-gray-700">Items Ordered</h3>
-					{/* Order Status Progress Bar */}
+					{order?.orderStatus && <StaticStepProgressBar orderStatus={order?.orderStatus} />}
 					{order?.products?.map((products: any) => (<DeliveryItemCard product={products} />))}
 				</div>
 				<div className="text-md text-gray-700 font-semibold space-y-8 w-1/3">
