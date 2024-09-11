@@ -19,7 +19,9 @@ export const Carousel = () => {
             setCurrentIndex(prevIndex => Math.min(prevIndex + cardsToShow, totalCards - cardsToShow));
         }
     };
-    
+
+    console.log(currentIndex)
+
     return (
         <div className="relative px-16">
             <div className="overflow-hidden">
@@ -40,12 +42,12 @@ export const Carousel = () => {
                     ))}
                 </div>
             </div>
-            <button className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" onClick={() => prevSlide()}>
-            <IoIosArrowBack />
-            </button>
-            <button className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" onClick={() => nextSlide()}>
+            {currentIndex > 0 && <button className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" onClick={() => prevSlide()}>
+                <IoIosArrowBack />
+            </button>}
+            {(currentIndex < totalCards - cardsToShow) && <button className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" onClick={() => nextSlide()}>
                 <IoIosArrowForward />
-            </button>
+            </button>}
         </div>
     );
 };

@@ -5,7 +5,7 @@ export const StaticStepProgressBar = ({ orderStatus }: { orderStatus: string }) 
     const currentStep = getCurrentStep(orderStatus);
 
     return (
-        <div className="flex items-center justify-between my-4">
+        <div className="flex items-center justify-between pb-4">
             {progressSteps.map((step, index) => (
                 <div className={`flex flex-col items-center ${index !== progressSteps.length - 1 ? 'w-full' : ''}`}>
                     <div key={step.key} className='flex items-center w-full'>

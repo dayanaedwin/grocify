@@ -36,9 +36,9 @@ export const OrderDetails = () => {
 			</div>
 			<div className="flex w-full space-x-8">
 				<div className="space-y-4 w-2/3">
-					<h3 className="text-lg font-semibold text-gray-700">Items Ordered</h3>
+					<h3 className="text-lg font-semibold text-gray-700">Order Details</h3>
 					{order?.orderStatus && <StaticStepProgressBar orderStatus={order?.orderStatus} />}
-					{order?.products?.map((products: any) => (<DeliveryItemCard product={products} />))}
+					{order?.products?.map((products: any) => (<DeliveryItemCard product={products} orderStatus={order?.orderStatus} orderId={order?._id} />))}
 				</div>
 				<div className="text-md text-gray-700 font-semibold space-y-8 w-1/3">
 					{order?.deliveryAddress && (<div className="space-y-2">
