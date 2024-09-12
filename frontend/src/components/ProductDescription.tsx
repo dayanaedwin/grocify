@@ -1,5 +1,8 @@
+import { useDispatch } from "react-redux"
 import { IProductDetails } from "../constants"
 import { Rating } from "./Rating"
+import { AppDispatch } from "../store"
+import { addToCart } from "../thunks"
 
 
 interface ProductDescriptionProps {
@@ -7,6 +10,11 @@ interface ProductDescriptionProps {
 }
 
 export const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
+    const dispatch = useDispatch<AppDispatch>();
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({ productId: product._id, quantity: 1 }));
+    }
 
     return (
         <div className='w-1/2 px-20 space-y-2 flex flex-col justify-between'>
@@ -23,6 +31,7 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = ({ product 
             </div>
             <button
                 className='bg-primary text-white font-semibold py-2 px-14 rounded border border-primary hover:bg-white hover:text-primary'
+                onClick={handleAddToCart}
             >
                 Add to Cart
             </button>

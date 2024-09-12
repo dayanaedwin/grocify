@@ -31,12 +31,12 @@ export const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images
     return (
         <div className='w-1/2 flex items-center justify-around space-x-6'>
             <div className='flex flex-col justify-between items-center w-full'>
-                <button
+                {currentIndex > 0 && <button
                     className='shadow-lg bg-white border border-gray-200 text-black p-2 rounded-full mb-2'
                     onClick={prevSlide}
                 >
                     <IoIosArrowUp />
-                </button>
+                </button>}
                 <div className='relative w-full h-64 overflow-hidden flex justify-center items-center'>
                     <div
                         className='flex flex-col items-center transition-transform duration-500 ease-in-out space-y-2'
@@ -54,12 +54,12 @@ export const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images
                         ))}
                     </div>
                 </div>
-                <button
+                {(currentIndex < totalCards - cardsToShow) && <button
                     className='shadow-lg bg-white border border-gray-200 text-black p-2 mt-2 rounded-full'
                     onClick={nextSlide}
                 >
                     <IoIosArrowDown />
-                </button>
+                </button>}
             </div>
             <img src={images[focusedImage]} alt={productName} className="h-80 object-cover" />
         </div>
