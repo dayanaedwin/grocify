@@ -1,0 +1,1 @@
+export { ProductCardShimmer } from './ProductCardShimmer';

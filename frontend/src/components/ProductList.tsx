@@ -2,6 +2,7 @@ import { IProductDetails, sortOptions } from '../constants';
 import { ProductCard } from './ProductCard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { ProductCardShimmer } from '../shimmer-ui';
 
 interface ProductListProps {
     products: IProductDetails[];
@@ -10,6 +11,8 @@ interface ProductListProps {
 }
 
 export const ProductList: React.FC<ProductListProps> = ({ products, sort, onChange }) => {
+
+    const { status } = useSelector((state: RootState) => state.product);
 
     return (
         <div className='w-3/4 py-4'>
@@ -26,9 +29,13 @@ export const ProductList: React.FC<ProductListProps> = ({ products, sort, onChan
                 </select>
             </div>
             <div className='grid grid-cols-4 gap-4'>
-                {products.map((product: IProductDetails) => (
-                    <ProductCard key={product._id} product={product} />
-                ))}
+                {status === 'loading' ?
+                    [...Array(8)].map((_, index) => (
+                        <ProductCardShimmer key={index} />
+                    )) :
+                    products.map((product: IProductDetails) => (
+                        <ProductCard key={product._id} product={product} />
+                    ))}
             </div>
         </div>
     );
