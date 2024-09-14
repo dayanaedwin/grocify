@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RouteConstants } from '../constants';
 import { CartItem } from './CartItem';
 import { IoChevronForward, IoClose } from "react-icons/io5";
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartItems, ICartItem } from '../thunks';
 import { AppDispatch, RootState } from '../store';
 import { useNavigate } from 'react-router-dom';
+import { CartItemsShimmer } from '../shimmer-ui';
 
 interface CartDrawerProps {
     isOpen: boolean;
@@ -15,7 +16,8 @@ interface CartDrawerProps {
 export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { cart } = useSelector((state: RootState) => state.cart);
+    const { cart, status } = useSelector((state: RootState) => state.cart);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const navigateToCheckout = () => {
         onClose();
@@ -30,6 +32,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
         }
     }, [isOpen]);
 
+    useEffect(() => {
+        if (status === 'succeeded') {
+            const price = cart.reduce((acc, item) => acc + (item.productDetails.price * item.quantity), 0);
+            setTotalPrice(price);
+        }
+    }, [status]);
+
     return (
         <div className={`fixed inset-0 z-50 transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             <div className={`fixed inset-0 ${isOpen ? 'bg-black opacity-50' : ''}`} onClick={() => onClose()}></div>
@@ -41,16 +50,26 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                     </button>
                 </div>
                 <ul className="space-y-5 flex-grow overflow-y-auto">
-                    {cart.map((item: ICartItem) => (
-                        <li key={item._id}>
-                            <CartItem item={item} />
-                        </li>
-                    ))}
+                    {status === 'loading' ?
+                        <CartItemsShimmer /> :
+                        (cart.map((item: ICartItem) => (
+                            <li key={item._id}>
+                                <CartItem item={item} />
+                            </li>
+                        )))
+                    }
                 </ul>
-                <button onClick={navigateToCheckout} className="flex justify-center items-center mt-4 bg-primary text-white font-semibold py-2 px-4 rounded border border-primary hover:bg-white hover:text-primary">
-                    {`${(cart && cart.length > 0) ? 'Proceed to Checkout' : 'Continue Shopping'}`}
-                    <IoChevronForward className='mt-1 ms-1 font-bold text-xl' />
-                </button>
+                <div className="flex justify-between items-center mt-4">
+                    {(cart && cart.length > 0) &&
+                        <div className=''>
+                            <h2 className='text-xl font-semibold text-primary'>₹{totalPrice}</h2>
+                            <p className='text-xs text-gray-500'>Grand Total</p>
+                        </div>}
+                    <button onClick={navigateToCheckout} className="flex justify-center items-center bg-primary text-white font-semibold py-2 px-4 rounded border border-primary hover:bg-white hover:text-primary">
+                        {`${(cart && cart.length > 0) ? 'Proceed to Checkout' : 'Continue Shopping'}`}
+                        <IoChevronForward className='mt-1 ms-1 font-bold text-xl' />
+                    </button>
+                </div>
             </div>
         </div>
     );
