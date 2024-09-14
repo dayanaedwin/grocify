@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { APIS, cartItems } from "../constants";
+import { APIS } from "../constants";
 import { axiosInstance, getFirebaseImgURL } from "../helpers";
 import { IProductDetails } from "../slices";
 

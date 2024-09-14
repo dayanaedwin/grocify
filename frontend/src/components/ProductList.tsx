@@ -3,6 +3,7 @@ import { ProductCard } from './ProductCard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { ProductCardShimmer } from '../shimmer-ui';
+import { Breadcrumb } from './Breadcrumb';
 
 interface ProductListProps {
     products: IProductDetails[];
@@ -17,6 +18,7 @@ export const ProductList: React.FC<ProductListProps> = ({ products, sort, onChan
     return (
         <div className='w-3/4 py-4'>
             <div className='flex justify-between items-center mb-4'>
+                <Breadcrumb />
                 <h2 className='text-xl font-semibold'>Products</h2>
                 <select
                     value={sort}

@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { orders } from "../constants";
 import { Fragment, useEffect, useState } from "react";
 import { AddressCard, PaymentDetails, DeliveryItemCard, StaticStepProgressBar } from "../components";
 import { useDispatch, useSelector } from "react-redux";

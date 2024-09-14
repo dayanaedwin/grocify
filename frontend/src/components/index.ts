@@ -3,6 +3,7 @@ export { AccountSidebar } from './AccountSidebar';
 export { AddAddress } from './AddAddress';
 export { AddNewAddressDrawer } from './AddNewAddressDrawer';
 export { AddressCard } from './AddressCard';
+export { Breadcrumb } from './Breadcrumb';
 export { Carousel } from './Carousal';
 export { CartDrawer } from './CartDrawer';
 export { CartItem } from './CartItem';
