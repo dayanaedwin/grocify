@@ -15,10 +15,8 @@ const App = () => {
 					<Route index element={<Home />} />
 					<Route path={RouteConstants.products} element={<Products />} />
 					<Route path={RouteConstants.product_details} element={<ProductDetails />} />
-					<Route path={RouteConstants.account} element={<Account />} >
-						<Route path={RouteConstants.profile} element={<Profile />} />
-						<Route path={RouteConstants.orders} element={<OrderList />} />
-					</Route>
+					<Route path={RouteConstants.profile} element={<Account children={<Profile />} />} />
+					<Route path={RouteConstants.orders} element={<Account children={<OrderList />} />} />
 					<Route path={RouteConstants.order_details} element={<OrderDetails />} />
 					<Route path={RouteConstants.checkout} element={<Checkout />} />
 				</Route>

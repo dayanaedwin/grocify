@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../store";
 import { getAllOrders } from "../thunks";
 import { OrderListShimmer } from "../shimmer-ui";
+import { Breadcrumb } from "./Breadcrumb";
 
 export const OrderList = () => {
     const [selected, setSelected] = useState({ status: 0, dateRange: 0 });
@@ -37,7 +38,7 @@ export const OrderList = () => {
                 <OrderListShimmer /> :
                 <div className="w-3/4 space-y-4">
                     <div className="flex">
-                        Breadcrumb for navigation - use a common component
+                        <Breadcrumb />
                     </div>
                     <div className="flex justify-between">
                         <div className="space-x-4">
@@ -63,7 +64,7 @@ export const OrderList = () => {
                         </div>
                     </div>
                     <div className="space-y-4">
-                        {orderList.map((order: any, index: number) => (
+                        {orderList?.map((order: any, index: number) => (
                             <Link key={order._id} to={`${RouteConstants.orders_root}/${order._id}`} className="p-4 border border-gray-300 rounded-lg flex justify-between cursor-pointer hover:shadow-lg" >
                                 <div className="space-y-2">
                                     <div className="flex space-x-2 text-gray-500 text-sm">

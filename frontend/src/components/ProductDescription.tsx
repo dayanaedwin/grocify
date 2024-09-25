@@ -3,6 +3,7 @@ import { IProductDetails } from "../constants"
 import { Rating } from "./Rating"
 import { AppDispatch, RootState } from "../store"
 import { addToCart, updateCart } from "../thunks"
+import { Breadcrumb } from "./Breadcrumb"
 
 
 interface ProductDescriptionProps {
@@ -28,6 +29,7 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = ({ product 
     return (
         <div className='w-1/2 px-20 space-y-2 flex flex-col justify-between'>
             <div className="py-10 space-y-2">
+                <Breadcrumb title={product.name} />
                 <h2 className='text-2xl font-bold'>{`${product.name} (1 ${product.uom})`}</h2>
                 <p className='text-sm text-gray-500'>{product.seller}</p>
                 <Rating rating={product.rating} />

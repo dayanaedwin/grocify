@@ -1,7 +1,7 @@
 import { Link, useLocation, matchPath } from 'react-router-dom';
 import { breadcrumbList } from '../constants';
 
-export const Breadcrumb = () => {
+export const Breadcrumb: React.FC<{ title?: string }> = ({ title }) => {
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((x) => x);
 
@@ -11,7 +11,9 @@ export const Breadcrumb = () => {
 
         Object.keys(breadcrumbList).forEach((key) => {
             const match = matchPath(key, to);
-            if (match) breadcrumbName = breadcrumbList[key];
+            if (match) {
+                breadcrumbName = (key.includes('/:id') && title) ? title : breadcrumbList[key];
+            };
         });
 
         return { to, breadcrumbName };
@@ -20,18 +22,18 @@ export const Breadcrumb = () => {
     console.log(crumbs);
 
     return (
-        <nav className="text-gray-600 my-4" aria-label="breadcrumb">
+        <nav className="text-gray-600 text-xs" aria-label="breadcrumb">
             <ol className="list-reset flex">
                 <li>
-                    <Link to="/" className="text-blue-600 hover:underline">Home</Link>
+                    <Link to="/" className="text-black hover:underline">Home</Link>
                 </li>
                 {crumbs.map((crumb, index) => (
                     <li key={crumb.to} className="flex items-center">
-                        <span className="mx-2">/</span>
+                        <span className="mx-1">/</span>
                         {index === crumbs.length - 1 ? (
                             <span className="text-gray-500">{crumb.breadcrumbName}</span>
                         ) : (
-                            <Link to={crumb.to} className="text-blue-600 hover:underline">
+                            <Link to={crumb.to} className="text-black hover:underline">
                                 {crumb.breadcrumbName}
                             </Link>
                         )}

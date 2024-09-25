@@ -1,10 +1,12 @@
 import { MdOutlineEdit } from "react-icons/md"
 import { RiKey2Line } from "react-icons/ri"
+import { Breadcrumb } from "./Breadcrumb"
 
 export const Profile = () => {
     return (
         <div className="flex flex-col w-3/4 space-y-4">
-            <p className="text-xs text-gray-500">Breadcrumb for navigation - use a common component</p>
+            {/* <p className="text-xs text-gray-500">Breadcrumb for navigation - use a common component</p> */}
+            <Breadcrumb />
             <div className="flex justify-between">
                 <h6 className="text-lg font-semibold text-gray-700">Profile</h6>
                 <div className="space-x-4 flex">

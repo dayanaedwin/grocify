@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
-import { AddressCard, PaymentDetails, DeliveryItemCard, StaticStepProgressBar } from "../components";
+import { AddressCard, PaymentDetails, DeliveryItemCard, StaticStepProgressBar, Breadcrumb } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { getOrderById } from "../thunks";
@@ -24,7 +24,7 @@ export const OrderDetails = () => {
 			{status === 'loading' ?
 				<OrderDetailsShimmer /> :
 				<div className='flex flex-col overflow-y-auto py-12 px-32 space-y-4'>
-					{/* Breadcrumb for navigation - use a common component */}
+					<Breadcrumb />
 					<div className="bg-[#F6F6F6] flex rounded p-6 space-y-2 w-full">
 						<div className="font-semibold space-y-2 text-gray-700 w-2/6">
 							<h6 className="text-sm">Order ID: {order?._id}</h6>

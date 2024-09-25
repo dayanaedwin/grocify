@@ -17,8 +17,8 @@ export const ProductList: React.FC<ProductListProps> = ({ products, sort, onChan
 
     return (
         <div className='w-3/4 py-4'>
+            <Breadcrumb />
             <div className='flex justify-between items-center mb-4'>
-                <Breadcrumb />
                 <h2 className='text-xl font-semibold'>Products</h2>
                 <select
                     value={sort}
