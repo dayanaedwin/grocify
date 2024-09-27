@@ -43,7 +43,7 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({ isOpen, onClose 
             newPassword: data.newPassword
         }));
 
-        // dispatch(logout());
+        dispatch(logout());
         
         onClose();
     }
