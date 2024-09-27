@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getLoggedUser } from "../thunks";
+import { getLoggedUser, updatePassword, updateUserInfo } from "../thunks";
+import { logoutActionType } from "./authSlice";
 
 export interface User {
     _id: string,
@@ -35,7 +36,13 @@ const initialState: UserState = {
 const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {},
+    reducers: {
+        logout: state => {
+            state.user = null;
+            state.status = 'idle';
+            localStorage.removeItem('token');
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getLoggedUser.pending, (state) => {
@@ -48,6 +55,35 @@ const userSlice = createSlice({
             .addCase(getLoggedUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Failed to get the data';
+            })
+
+            .addCase(updateUserInfo.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(updateUserInfo.fulfilled, (state) => {
+                state.status = 'succeeded';
+            })
+            .addCase(updateUserInfo.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Failed to get the data';
+            })
+
+            .addCase(updatePassword.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(updatePassword.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                localStorage.removeItem('token');
+            })
+            .addCase(updatePassword.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Failed to get the data';
+            })
+
+            .addCase(logoutActionType, (state) => {
+                state.user = null;
+                state.status = 'idle';
+                state.error = null;
             });
     },
 });

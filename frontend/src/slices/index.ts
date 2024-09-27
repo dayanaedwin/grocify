@@ -1,4 +1,4 @@
-export { default as authReducer, logout } from './authSlice';
+export { default as authReducer, logout, logoutActionType } from './authSlice';
 export { default as cartReducer } from './cartSlice';
 export { default as orderReducer } from './orderSlice';
 export { default as productReducer } from './productSlice';

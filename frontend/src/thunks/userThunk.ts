@@ -25,3 +25,15 @@ export const updateUserInfo = createAsyncThunk(
         }
     }
 );
+
+export const updatePassword = createAsyncThunk(
+    APIS.UPDATE_PASSWORD,
+    async (data: any, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.put(APIS.UPDATE_PASSWORD, data);
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response.error);
+        }
+    }
+);

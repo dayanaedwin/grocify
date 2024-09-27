@@ -1,37 +1,34 @@
-import { MdOutlineEdit } from "react-icons/md";
-import { RiKey2Line } from "react-icons/ri";
-import { Breadcrumb } from "./Breadcrumb";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store";
-import { AddressCard } from "./AddressCard";
 import { Fragment, useState } from "react";
+import { RiKey2Line } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import { Breadcrumb } from "./Breadcrumb";
+import { RootState } from "../store";
 import { AddressDrawer } from "./AddressDrawer";
 import { UserInfoDrawer } from "./UserInfoDrawer";
+import { ChangePassword } from "./ChangePassword";
 
 export const Profile = () => {
     const { user } = useSelector((state: RootState) => state.user);
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [isUserDrawerOpen, setIsUserDrawerOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<{ changePassword: boolean, updateContact: boolean, addAddress: boolean }>({ changePassword: false, updateContact: false, addAddress: false });
     const [selectedAddressIndex, setSelectedAddressIndex] = useState<number>(-1);
     const [drawerTitle, setDrawerTitle] = useState<string>('');
 
-    const toggleDrawer = () => {
-        setIsOpen(!isOpen);
+    const toggleDrawer = (key: keyof typeof isOpen) => {
+        setIsOpen(prevState => ({
+            ...prevState,
+            [key]: !prevState[key]
+        }));
     };
-
-    const handleEditUser = () => {
-        setIsUserDrawerOpen(true);
-    }
 
     const handleEditAdrress = (index: number) => {
         setSelectedAddressIndex(index);
-        setIsOpen(true);
+        toggleDrawer('addAddress');
         setDrawerTitle('Edit Adress');
     }
 
     const handleAddAdresss = () => {
         setSelectedAddressIndex(-1);
-        setIsOpen(true);
+        toggleDrawer('addAddress');
         setDrawerTitle('Add New Adress');
     }
 
@@ -42,7 +39,10 @@ export const Profile = () => {
                 <div className="flex justify-between">
                     <h6 className="text-lg font-semibold text-gray-700">Profile</h6>
                     <div className="space-x-4 flex">
-                        <button className="flex space-x-2 px-4 py-2 text-xs font-semibold text-white bg-primary rounded border border-primary hover:bg-white hover:text-primary">
+                        <button
+                            onClick={() => toggleDrawer('changePassword')}
+                            className="flex space-x-2 px-4 py-2 text-xs font-semibold text-white bg-primary rounded border border-primary hover:bg-white hover:text-primary"
+                        >
                             <RiKey2Line size={15} className="me-1" />
                             Change Password
                         </button>
@@ -50,7 +50,7 @@ export const Profile = () => {
                 </div>
                 <div className="flex justify-between items-center">
                     <h6 className='text-sm font-semibold'>Contact Information</h6>
-                    <button onClick={handleEditUser} className="text-xs border border-primary font-semibold text-primary px-2 py-1 rounded-sm">Edit</button>
+                    <button onClick={() => toggleDrawer('updateContact')} className="text-xs border border-primary font-semibold text-primary px-2 py-1 rounded-sm">Edit</button>
                 </div>
                 <div className='flex w-full'>
                     <p className='text-xs text-black font-medium pe-1 pt-1'>Name:</p>
@@ -89,8 +89,9 @@ export const Profile = () => {
                     ))}
                 </div>
             </div>
-            <UserInfoDrawer isOpen={isUserDrawerOpen} onClose={() => setIsUserDrawerOpen(!isUserDrawerOpen)} user={user} />
-            <AddressDrawer title={drawerTitle} isOpen={isOpen} onClose={toggleDrawer} selectedIndex={selectedAddressIndex} setSelectedIndex={setSelectedAddressIndex} />
+            <ChangePassword isOpen={isOpen.changePassword} onClose={() => toggleDrawer('changePassword')} />
+            <UserInfoDrawer isOpen={isOpen.updateContact} onClose={() => toggleDrawer('updateContact')} user={user} />
+            <AddressDrawer title={drawerTitle} isOpen={isOpen.addAddress} onClose={() => toggleDrawer('addAddress')} selectedIndex={selectedAddressIndex} setSelectedIndex={setSelectedAddressIndex} />
         </Fragment >
     )
 }
