@@ -9,12 +9,12 @@ interface AddressCardProps {
         state: string;
         pincode: number;
         country: string;
-    }
+    };
 }
 
 export const AddressCard: React.FC<AddressCardProps> = ({ address }) => {
     return (
-        <div className="text-xs space-y-1 border border-gray-300 rounded-md p-4">   
+        <div className="text-xs space-y-1 border border-gray-300 rounded-md p-4">
             <p>{address?.name}</p>
             <p>{address?.building}</p>
             <p>{address?.street}</p>

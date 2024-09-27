@@ -19,7 +19,8 @@ export const Breadcrumb: React.FC<{ title?: string }> = ({ title }) => {
         return { to, breadcrumbName };
     });
 
-    console.log(crumbs);
+
+    
 
     return (
         <nav className="text-gray-600 text-xs" aria-label="breadcrumb">

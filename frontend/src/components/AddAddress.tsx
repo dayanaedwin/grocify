@@ -2,7 +2,7 @@ import { FiPlus } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../store";
 import { useState } from "react";
-import { AddNewAddressDrawer } from "./AddNewAddressDrawer";
+import { AddressDrawer } from "./AddressDrawer";
 
 interface IAddAdress {
     deliveryAddress: any;
@@ -12,6 +12,7 @@ interface IAddAdress {
 export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, updateOrderInfo }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
+    const [drawerTitle, setDrawerTitle] = useState<string>('');
     const { user } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -22,6 +23,7 @@ export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, updateOrderI
     const updateAddress = (index: number) => {
         setSelectedAddressIndex(index);
         setIsOpen(true);
+        setDrawerTitle('Edit Adress');
     }
 
     return (
@@ -54,7 +56,7 @@ export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, updateOrderI
                     ))}
                 </div>
             </div>
-            <AddNewAddressDrawer isOpen={isOpen} onClose={toggleDrawer} selectedAddressIndex={selectedAddressIndex} setSelectedAddressIndex={setSelectedAddressIndex} />
+            <AddressDrawer title={drawerTitle} isOpen={isOpen} onClose={toggleDrawer} selectedIndex={selectedAddressIndex} setSelectedIndex={setSelectedAddressIndex} />
         </>
     )
 }

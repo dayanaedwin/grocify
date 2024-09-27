@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 exports.getCurrentUser = async (req, res) => {
     try {
         const userId = req.userId;
-        const user = await User.findById(userId).select('name email roles addresses');
+        const user = await User.findById(userId).select('name email phone roles addresses');
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
