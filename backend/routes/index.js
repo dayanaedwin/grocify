@@ -7,6 +7,10 @@ const productRoute = require('./productRoute');
 const userOrderRoute = require('./userOrderRoute');
 const cartRoute = require('./cartRoute');
 
+route.get('/api', (req, res) => {
+    res.json({ message: 'This is an endpoint!' });
+});
+
 route.use('/auth', authRoute);
 route.use('/user', userRoute);
 route.use('/product', productRoute);
