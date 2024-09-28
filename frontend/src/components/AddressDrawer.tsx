@@ -173,7 +173,7 @@ export const AddressDrawer: React.FC<AddressDrawerProps> = ({ title, isOpen, onC
                 </div>
 
                 <button type="submit" disabled={isSubmitting} className="flex justify-center items-center mt-4 bg-primary text-white font-semibold py-2 px-4 rounded border border-primary hover:bg-white hover:text-primary">
-                    Ship to this Address
+                    Update
                 </button>
             </form>
         </Drawer>

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Create axios instance with default settings
 export const axiosInstance = axios.create({
-    baseURL: '',
+    baseURL: process.env.REACT_APP_API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
