@@ -1,17 +1,23 @@
 import { Fragment, useState } from "react";
 import { RiKey2Line } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Breadcrumb } from "./Breadcrumb";
-import { RootState } from "../store";
+import { AppDispatch, RootState } from "../store";
 import { AddressDrawer } from "./AddressDrawer";
 import { UserInfoDrawer } from "./UserInfoDrawer";
 import { ChangePassword } from "./ChangePassword";
+import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+import { Modal } from "./Modal";
+import { getLoggedUser, updateUserInfo } from "../thunks";
+import { FiPlus } from "react-icons/fi";
 
 export const Profile = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const { user } = useSelector((state: RootState) => state.user);
-    const [isOpen, setIsOpen] = useState<{ changePassword: boolean, updateContact: boolean, addAddress: boolean }>({ changePassword: false, updateContact: false, addAddress: false });
+    const [isOpen, setIsOpen] = useState<{ changePassword: boolean, updateContact: boolean, addAddress: boolean, deleteModal: boolean }>({ changePassword: false, updateContact: false, addAddress: false, deleteModal: false });
     const [selectedAddressIndex, setSelectedAddressIndex] = useState<number>(-1);
     const [drawerTitle, setDrawerTitle] = useState<string>('');
+    const [indexToBeDeleted, setIndexToBeDeleted] = useState<number>(-1);
 
     const toggleDrawer = (key: keyof typeof isOpen) => {
         setIsOpen(prevState => ({
@@ -32,6 +38,25 @@ export const Profile = () => {
         setDrawerTitle('Add New Adress');
     }
 
+    const handleDeleteAddress = (index: number) => {
+        toggleDrawer('deleteModal');
+        setIndexToBeDeleted(index);
+    }
+
+    const deleteAddress = async () => {
+        if (user?.addresses) {
+            const addresses = [...user?.addresses];
+            addresses.splice(indexToBeDeleted, 1);
+            try {
+                await dispatch(updateUserInfo({ ...user, addresses: addresses })).unwrap();
+                await dispatch(getLoggedUser());
+                toggleDrawer('deleteModal')
+            } catch (error) {
+                console.error('Failed to update cart item:', error);
+            }
+        }
+    }
+
     return (
         <Fragment>
             <div className="flex flex-col w-3/4 space-y-4">
@@ -49,8 +74,11 @@ export const Profile = () => {
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <h6 className='text-sm font-semibold'>Contact Information</h6>
-                    <button onClick={() => toggleDrawer('updateContact')} className="text-xs border border-primary font-semibold text-primary px-2 py-1 rounded-sm">Edit</button>
+                    <h6 className='text-md font-semibold text-gray-700'>Contact Information</h6>
+                    <button onClick={() => toggleDrawer('updateContact')} className="flex text-xs border border-primary font-semibold text-primary px-2 py-1 rounded-sm">
+                        <MdOutlineEdit size={15} className="me-1" />
+                        Edit
+                    </button>
                 </div>
                 <div className='flex w-full'>
                     <p className='text-xs text-black font-medium pe-1 pt-1'>Name:</p>
@@ -67,8 +95,11 @@ export const Profile = () => {
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <h6 className='text-sm font-semibold'>Addresses</h6>
-                    <button onClick={handleAddAdresss} className="text-xs border border-primary font-semibold text-primary px-2 py-1 rounded-sm">Add New</button>
+                    <h6 className='text-md font-semibold text-gray-700'>Addresses</h6>
+                    <button onClick={handleAddAdresss} className="flex text-xs border border-primary font-semibold text-primary px-2 py-1 rounded-sm">
+                        <FiPlus size={15} className="me-1" />
+                        Add
+                    </button>
                 </div>
                 <div className="grid grid-cols-3 gap-x-3 gap-y-4">
                     {user?.addresses?.map((address: any, index: number) => (
@@ -83,7 +114,14 @@ export const Profile = () => {
                             <p className='text-xs'>{address?.pincode}</p>
                             <div className="flex justify-between">
                                 <p className='text-xs'>Phone: {address?.phone}</p>
-                                <button onClick={() => handleEditAdrress(index)} className="text-xs border font-semibold text-gray-700 px-2 py-1 rounded-sm">Edit</button>
+                                <div className="flex space-x-1">
+                                    <button onClick={() => handleEditAdrress(index)} className="flex text-xs font-semibold text-gray-700">
+                                        <MdOutlineEdit size={15} />
+                                    </button>
+                                    <button onClick={() => handleDeleteAddress(indexToBeDeleted)} className="flex text-xs font-semibold text-red-700">
+                                        <MdOutlineDelete size={15} />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -92,6 +130,18 @@ export const Profile = () => {
             <ChangePassword isOpen={isOpen.changePassword} onClose={() => toggleDrawer('changePassword')} />
             <UserInfoDrawer isOpen={isOpen.updateContact} onClose={() => toggleDrawer('updateContact')} user={user} />
             <AddressDrawer title={drawerTitle} isOpen={isOpen.addAddress} onClose={() => toggleDrawer('addAddress')} selectedIndex={selectedAddressIndex} setSelectedIndex={setSelectedAddressIndex} />
+
+            {isOpen.deleteModal &&
+                <Modal onClose={() => toggleDrawer('deleteModal')} isCloseBtn={true}>
+                    <div className="text-center p-5">
+                        <h2 className="text-lg font-semibold mb-4">Are you sure?</h2>
+                        <p className="text-sm mb-4">The address will be deleted permenantly. Are you sure?</p>
+                        <div className="flex justify-end items-center space-x-2">
+                            <button onClick={() => toggleDrawer('deleteModal')} className="text-xs text-gray-700 font-semibold border border-gray-700 px-2 py-1 rounded-md">Cancel</button>
+                            <button onClick={deleteAddress} className="text-xs text-red-700 font-semibold border border-red-700 px-2 py-1 rounded-md">Delete</button>
+                        </div>
+                    </div>
+                </Modal>}
         </Fragment >
     )
 }
