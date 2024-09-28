@@ -3,3 +3,4 @@ export { OrderDetailsShimmer } from './OrderDetailsShimmer';
 export { OrderListShimmer } from './OrderListShimmer';
 export { ProductCardShimmer } from './ProductCardShimmer';
 export { ProductDetailsShimmer } from './ProductDetailsShimmer';
+export { ProfileShimmer } from './ProfileShimmer';
