@@ -23,4 +23,8 @@ mongoose.connect(URL).then(response => {
     console.log("Error connecting to Mongo DB");
 });
 
+app.get('/api', (req, res) => {
+    res.json({ message: 'Hello from the backend!' });
+});
+
 app.use('/', route);
