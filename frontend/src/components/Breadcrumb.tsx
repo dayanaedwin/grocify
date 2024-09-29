@@ -19,9 +19,6 @@ export const Breadcrumb: React.FC<{ title?: string }> = ({ title }) => {
         return { to, breadcrumbName };
     });
 
-
-    
-
     return (
         <nav className="text-gray-600 text-xs" aria-label="breadcrumb">
             <ol className="list-reset flex">

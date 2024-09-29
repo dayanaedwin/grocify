@@ -3,6 +3,7 @@ import { AddAddress } from "./AddAddress";
 import { CheckoutList } from "./CheckoutList";
 import { PaymentMode } from "./PaymentMode";
 import { StepProgressBar } from "./StepProgressBar";
+import { Breadcrumb } from "./Breadcrumb";
 
 interface IReview {
     currentStep: number;
@@ -14,7 +15,8 @@ interface IReview {
 export const Review: React.FC<IReview> = ({ currentStep, handleBack, orderInfo, updateOrderInfo }) => {
 
     return (
-        <div className="w-7/12">
+        <div className="w-7/12 mt-6">
+            <Breadcrumb />
             <StepProgressBar currentStep={currentStep} />
             {currentStep === 1 ?
                 <CheckoutList /> :

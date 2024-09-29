@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FilterBar, ProductList } from "../components";
 import { AppDispatch, RootState } from "../store";
-import { fetchProducts } from "../thunks";
+import { fetchCartItems, fetchProducts } from "../thunks";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const Products = () => {
@@ -54,7 +54,8 @@ export const Products = () => {
 
 	useEffect(() => {
 		const fetchAllProducts = async () => {
-			dispatch(fetchProducts());
+			await dispatch(fetchProducts());
+			await dispatch(fetchCartItems());
 		}
 
 		fetchAllProducts();

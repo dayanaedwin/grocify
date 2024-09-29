@@ -273,4 +273,5 @@ export const breadcrumbList: Record<string, string> = {
     '/profile': 'Profile',
     '/orders': 'Orders',
     '/orders/:id': 'Order Details',
+    '/checkout': 'Checkout'
 };

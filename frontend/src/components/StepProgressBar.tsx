@@ -2,7 +2,7 @@ export const StepProgressBar = ({ currentStep }: { currentStep: number }) => {
     const steps = ['Product Review', 'Select Address', 'Payment'];
 
     return (
-        <div className="flex justify-between items-center mb-6 mt-10">
+        <div className="flex justify-between items-center mb-6 mt-4">
             {steps.map((step, index) => (
                 <div key={index} className="flex items-center w-full">
                     {index > 0 && <div className={`flex-1 border-t-4 ${currentStep >= index + 1 ? 'border-primary' : 'border-gray-300'} transition duration-300 ease-in-out`}></div>}
