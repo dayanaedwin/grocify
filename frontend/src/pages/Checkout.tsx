@@ -18,9 +18,13 @@ export const Checkout = () => {
 		}
 	};
 
-	const handleBack = () => {
-		if (currentStep > 1) {
-			setCurrentStep(currentStep - 1);
+	const handleBack = (step?: number) => {
+		if (step) {
+			setCurrentStep(step);
+		} else {
+			if (currentStep > 1) {
+				setCurrentStep(currentStep - 1);
+			}
 		}
 	};
 
@@ -63,14 +67,14 @@ export const Checkout = () => {
 				setIsVisible={setIsVisible}
 			/>
 			{isVisible && (
-                <Modal onClose={() => setIsVisible(false)}>
-                    <div className="text-center p-5">
-                        <h2 className="text-lg font-semibold mb-4">Order Placed Successfully!</h2>
-                        <p className="text-sm mb-4">Your order has been placed and is being processed. You will receive an update soon.</p>
-                        <button onClick={() => handleShopMoreBtn()} className="text-primary font-semibold border border-primary px-4 py-2 rounded-md">Shop More</button>
-                    </div>
-                </Modal>
-            )}
+				<Modal onClose={() => setIsVisible(false)}>
+					<div className="text-center p-5">
+						<h2 className="text-lg font-semibold mb-4">Order Placed Successfully!</h2>
+						<p className="text-sm mb-4">Your order has been placed and is being processed. You will receive an update soon.</p>
+						<button onClick={() => handleShopMoreBtn()} className="text-primary font-semibold border border-primary px-4 py-2 rounded-md">Shop More</button>
+					</div>
+				</Modal>
+			)}
 		</div>
 	);
 };

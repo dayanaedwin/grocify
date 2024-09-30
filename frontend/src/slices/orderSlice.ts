@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createOrder, getAllOrders, getOrderById, IOrderData } from "../thunks";
 
-interface orderState {
+interface OrderState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
     orders: IOrderData[],
     order: IOrderData | null;
 }
 
-const initialState: orderState = {
+const initialState: OrderState = {
     status: 'idle',
     error: null,
     orders: [],

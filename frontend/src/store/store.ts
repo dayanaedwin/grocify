@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer, cartReducer, orderReducer, productReducer, userReducer } from "../slices";
+import { errorMiddleware } from "../helpers";
 
 const store = configureStore({
     reducer: {
@@ -9,6 +10,8 @@ const store = configureStore({
         product: productReducer,
         cart: cartReducer
     },
+    middleware: (middleware) =>
+        middleware().concat(errorMiddleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

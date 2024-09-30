@@ -3,13 +3,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { RouteConstants } from '../constants';
 import { login, LoginForm } from '../thunks';
 import { AppDispatch } from '../store';
+import { useState } from 'react';
 
 export const Login = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
+	const [isVisible, setIsVisible] = useState<boolean>(false);
 
 	const validationSchema = Yup.object().shape({
 		email: Yup.string()
@@ -65,13 +68,18 @@ export const Login = () => {
 
 					<div>
 						<h1 className='text-sm text-black font-medium'>Password</h1>
-						<input
-							{...register("password")}
-							type='password'
-							id='password'
-							placeholder='Enter your password'
-							className='w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-700'
-						/>
+						<div className="relative">
+							<input
+								{...register("password")}
+								type={isVisible ? 'text' : 'password'}
+								id='password'
+								placeholder='Enter your password'
+								className='w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-700'
+							/>
+							<button type='button' className='absolute right-4 top-4 font-bold' onClick={() => setIsVisible(!isVisible)}>
+								{isVisible ? <VscEye size={18} /> : <VscEyeClosed size={18} />}
+							</button>
+						</div>
 						<p className={`text-red-700 text-sm ${errors?.password?.message ? 'block' : 'hidden'}`} >{errors?.password?.message}</p>
 					</div>
 

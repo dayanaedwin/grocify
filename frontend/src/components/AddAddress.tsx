@@ -14,7 +14,6 @@ export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, updateOrderI
     const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
     const [drawerTitle, setDrawerTitle] = useState<string>('');
     const { user } = useSelector((state: RootState) => state.user);
-    const dispatch = useDispatch<AppDispatch>();
 
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
@@ -22,8 +21,14 @@ export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, updateOrderI
 
     const updateAddress = (index: number) => {
         setSelectedAddressIndex(index);
-        setIsOpen(true);
         setDrawerTitle('Edit Adress');
+        setIsOpen(true);
+    }
+
+    const handleAddAdresss = () => {
+        setSelectedAddressIndex(-1);
+        setDrawerTitle('Add New Adress');
+        setIsOpen(true);
     }
 
     return (
@@ -31,7 +36,7 @@ export const AddAddress: React.FC<IAddAdress> = ({ deliveryAddress, updateOrderI
             <div className="space-y-4">
                 <div className="flex justify-between">
                     <h6 className="text-lg font-semibold">Choose Address</h6>
-                    <button className="text-primary text-xs px-2 py-1 font-semibold flex items-center border rounded-md" onClick={toggleDrawer} >
+                    <button className="text-primary text-xs px-2 py-1 font-semibold flex items-center border rounded-md" onClick={handleAddAdresss} >
                         <h1>Add</h1>
                         <FiPlus className="font-bold ms-1" />
                     </button>

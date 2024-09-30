@@ -20,8 +20,6 @@ export const Carousel = () => {
         }
     };
 
-    console.log(currentIndex)
-
     return (
         <div className="relative px-16">
             <div className="overflow-hidden">

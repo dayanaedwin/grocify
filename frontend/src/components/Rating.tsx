@@ -20,9 +20,7 @@ export const Rating = ({ rating }: { rating: number }) => {
 
     return (
         <div className="flex space-x-1 text-yellow-500">
-            {stars.map((item: number) => {
-                return item == 0 ? <MdOutlineStarBorder /> : (item === 1 ? <MdOutlineStar /> : <MdOutlineStarHalf />)
-            })}
+            {stars.map((item: number) => (item == 0 ? <MdOutlineStarBorder /> : (item === 1 ? <MdOutlineStar /> : <MdOutlineStarHalf />)))}
         </div>
     )
 }

@@ -17,7 +17,7 @@ export const Review: React.FC<IReview> = ({ currentStep, handleBack, orderInfo, 
     return (
         <div className="w-7/12 mt-6">
             <Breadcrumb />
-            <StepProgressBar currentStep={currentStep} />
+            <StepProgressBar currentStep={currentStep} handleBack={handleBack} />
             {currentStep === 1 ?
                 <CheckoutList /> :
                 (currentStep === 2 ?

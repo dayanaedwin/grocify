@@ -27,7 +27,7 @@ const App = () => {
 
 const ProtectedRoutes = () => {
 	const { token } = useSelector((state: RootState) => state.auth);
-	return (token) ? <Outlet /> : <Navigate to={RouteConstants.login} />
+	return token ? <Outlet /> : <Navigate to={RouteConstants.login} />
 }
 
 export default App;
