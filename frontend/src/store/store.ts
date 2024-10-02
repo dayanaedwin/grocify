@@ -8,7 +8,7 @@ const store = configureStore({
         user: userReducer,
         order: orderReducer,
         product: productReducer,
-        cart: cartReducer
+        cart: cartReducer,
     },
     middleware: (middleware) =>
         middleware().concat(errorMiddleware),

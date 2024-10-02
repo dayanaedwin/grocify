@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { CartDrawer, AccountMenu } from "./index";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { SearchBar } from "./SearchBar";
 
 export const Header = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -45,11 +46,7 @@ export const Header = () => {
                     </Link>
                 </div>
                 <div className="flex items-center w-full">
-                    <input
-                        type="search"
-                        placeholder="Search"
-                        className="w-full py-2 px-10 text-sm text-gray-700 bg-gray-100 focus:ring-0"
-                    />
+                    <SearchBar />
                 </div>
                 <div className="flex items-center justify-end w-full">
                     <button
