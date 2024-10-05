@@ -1,5 +1,3 @@
-import React from "react";
-
 export const OrderListShimmer: React.FC = () => {
     return (
         <div className="w-3/4 space-y-4 animate-pulse">

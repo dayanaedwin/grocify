@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RouteConstants } from '../constants';
 import { IProductDetails } from '../slices';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
-import { addToCart, fetchCartItems, ICartItem, updateCart } from '../thunks';
+import { addToCart, fetchCartItems, updateCart } from '../thunks';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 
 interface ProductCardProps {
@@ -58,10 +58,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                             </button>
                         </div> :
                         <button
-                            className='flex justify-around items-center w-full text-primary text-xs font-semibold py-1 rounded border border-primary hover:bg-primary hover:text-white'
+                            className={`flex justify-around items-center w-full text-xs font-semibold py-1 rounded border hover:text-white ${product.stock > 0 ? 'text-primary border-primary hover:bg-primary' : ' text-red-500 border-red-500 hover:bg-red-500 disabled:cursor-not-allowed'} `}
                             onClick={() => handleAddToCart(product._id)}
                         >
-                            Add
+                            {product.stock > 0 ? 'Add' : 'Out of Stock'}
                         </button>
                     }
                 </div>

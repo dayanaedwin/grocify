@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { AddressCard, PaymentDetails, DeliveryItemCard, StaticStepProgressBar, Breadcrumb } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
@@ -17,7 +17,7 @@ export const OrderDetails = () => {
 		if (id) {
 			dispatch(getOrderById(id));
 		}
-	}, [id]);
+	}, [dispatch, id]);
 
 	return (
 		<Fragment>

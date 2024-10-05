@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLoggedUser, updateUserInfo } from '../thunks';
 import { useEffect } from 'react';
 import { Drawer } from './Drawer';
+import { addToast } from '../slices';
 
 interface AddressDrawerProps {
     title: string;
@@ -70,7 +71,7 @@ export const AddressDrawer: React.FC<AddressDrawerProps> = ({ title, isOpen, onC
             await dispatch(updateUserInfo(newUser)).unwrap();
             await dispatch(getLoggedUser());
         } catch (error) {
-            console.error('Failed to update cart item:', error);
+            dispatch(addToast({ message: 'Failed to update user info', type: 'error' }));
         }
         onClose();
     }

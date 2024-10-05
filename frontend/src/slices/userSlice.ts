@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getLoggedUser, updatePassword, updateUserInfo } from "../thunks";
 import { logoutActionType } from "./authSlice";
+import { addToast } from "./toastSlice";
 
 export interface User {
     _id: string,
@@ -24,13 +25,13 @@ export interface User {
 interface UserState {
     user: User | null,
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
-    error: string | null;
+    error: string;
 }
 
 const initialState: UserState = {
     user: null,
     status: 'idle',
-    error: null,
+    error: '',
 }
 
 const userSlice = createSlice({
@@ -52,9 +53,10 @@ const userSlice = createSlice({
                 state.status = 'succeeded';
                 state.user = action.payload;
             })
-            .addCase(getLoggedUser.rejected, (state, action) => {
+            .addCase(getLoggedUser.rejected, (state, action: PayloadAction<any>) => {
                 state.status = 'failed';
-                state.error = action.error.message || 'Failed to get the data';
+                state.error = action.payload.error || 'Failed to get the user data';
+                addToast({ message: state.error, type: "error" });
             })
 
             .addCase(updateUserInfo.pending, (state) => {
@@ -63,9 +65,10 @@ const userSlice = createSlice({
             .addCase(updateUserInfo.fulfilled, (state) => {
                 state.status = 'succeeded';
             })
-            .addCase(updateUserInfo.rejected, (state, action) => {
+            .addCase(updateUserInfo.rejected, (state, action: PayloadAction<any>) => {
                 state.status = 'failed';
-                state.error = action.error.message || 'Failed to get the data';
+                state.error = action.payload.error || 'An error occured while updating the user info. Please try again later.';
+                addToast({ message: state.error, type: "error" });
             })
 
             .addCase(updatePassword.pending, (state) => {
@@ -75,15 +78,16 @@ const userSlice = createSlice({
                 state.status = 'succeeded';
                 localStorage.removeItem('token');
             })
-            .addCase(updatePassword.rejected, (state, action) => {
+            .addCase(updatePassword.rejected, (state, action: PayloadAction<any>) => {
                 state.status = 'failed';
-                state.error = action.error.message || 'Failed to get the data';
+                state.error = action.payload.error || 'An error occured while updating the password. Please try again later.';
+                addToast({ message: state.error, type: "error" });
             })
 
             .addCase(logoutActionType, (state) => {
                 state.user = null;
                 state.status = 'idle';
-                state.error = null;
+                state.error = '';
             });
     },
 });

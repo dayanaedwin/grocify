@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer, cartReducer, orderReducer, productReducer, userReducer } from "../slices";
+import { authReducer, cartReducer, orderReducer, productReducer, toastReducer, userReducer } from "../slices";
 import { errorMiddleware } from "../helpers";
 
 const store = configureStore({
@@ -9,6 +9,7 @@ const store = configureStore({
         order: orderReducer,
         product: productReducer,
         cart: cartReducer,
+        toast: toastReducer,
     },
     middleware: (middleware) =>
         middleware().concat(errorMiddleware),

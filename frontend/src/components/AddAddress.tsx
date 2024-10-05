@@ -1,6 +1,6 @@
 import { FiPlus } from "react-icons/fi";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../store";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import { useState } from "react";
 import { AddressDrawer } from "./AddressDrawer";
 

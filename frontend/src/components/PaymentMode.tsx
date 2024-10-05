@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { paymentModes } from "../constants";
 
 interface IPaymentMode {

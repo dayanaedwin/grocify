@@ -1,16 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { login, signUp } from "../thunks";
+import { addToast } from "./toastSlice";
 
 interface AuthState {
     token: string | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
-    error: string | null;
+    error: string;
 }
 
 const initialState: AuthState = {
     token: localStorage.getItem('token') || null,
     status: 'idle',
-    error: null,
+    error: '',
 };
 
 const authSlice = createSlice({
@@ -21,7 +22,7 @@ const authSlice = createSlice({
             state.token = null;
             localStorage.removeItem('token');
             state.status = 'idle';
-            state.error = null;
+            state.error = '';
         }
     },
     extraReducers: builder => {
@@ -33,9 +34,10 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.token = action.payload.token;
             })
-            .addCase(login.rejected, (state, action) => {
+            .addCase(login.rejected, (state, action: PayloadAction<any>) => {
                 state.status = 'failed';
-                state.error = action.error.message || 'Login failed';
+                state.error = action.payload.error || 'Login failed';
+                addToast({ message: state.error, type: "error" });
             })
             .addCase(signUp.pending, (state) => {
                 state.status = 'loading';
@@ -43,9 +45,10 @@ const authSlice = createSlice({
             .addCase(signUp.fulfilled, (state) => {
                 state.status = 'succeeded';
             })
-            .addCase(signUp.rejected, (state, action) => {
+            .addCase(signUp.rejected, (state, action: PayloadAction<any>) => {
                 state.status = 'failed';
-                state.error = action.error.message || 'Registration failed';
+                state.error = action.payload.error || 'Registration failed';
+                addToast({ message: state.error, type: "error" });
             })
     }
 });

@@ -1,4 +1,3 @@
-
 export const ProductDetailsShimmer = () => {
     return (
         <div className="flex flex-grow overflow-y-auto py-12 px-32">

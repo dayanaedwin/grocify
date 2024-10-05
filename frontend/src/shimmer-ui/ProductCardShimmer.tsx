@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const ProductCardShimmer= () => {
     return (
         <div className="border p-4 rounded h-66 flex flex-col space-y-1 bg-white shadow-md animate-pulse">

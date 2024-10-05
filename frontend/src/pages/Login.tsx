@@ -8,6 +8,7 @@ import { RouteConstants } from '../constants';
 import { login, LoginForm } from '../thunks';
 import { AppDispatch } from '../store';
 import { useState } from 'react';
+import { addToast } from '../slices';
 
 export const Login = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -38,8 +39,8 @@ export const Login = () => {
 		try {
 			await dispatch(login(data)).unwrap();
 			navigate(RouteConstants.root);
-		} catch (error) {
-			console.log(error);
+		} catch (error: any) {
+			dispatch(addToast({ message: error.error, type: 'error' }));
 		}
 	}
 

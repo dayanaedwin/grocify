@@ -4,16 +4,19 @@ import { RouteConstants } from "../constants";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { CartDrawer, AccountMenu } from "./index";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store";
 import { SearchBar } from "./SearchBar";
+import { fetchCartItems } from "../thunks";
 
 export const Header = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const dropdownRef = useRef<HTMLDivElement>(null);
     const { user } = useSelector((state: RootState) => state.user);
+    const { cart } = useSelector((state: RootState) => state.cart);
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-    
+
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
@@ -31,6 +34,7 @@ export const Header = () => {
     };
 
     useEffect(() => {
+        dispatch(fetchCartItems());
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -50,11 +54,15 @@ export const Header = () => {
                 </div>
                 <div className="flex items-center justify-end w-full">
                     <button
-                        className='mx-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
+                        className='relative mx-4 flex justify-center items-center font-medium text-sm text-[#608e48] rounded focus:outline-none focus:ring-0'
                         onClick={toggleDrawer}
                     >
-                        <IoCartOutline size={20} className="me-1 mt-1" />
-                        Cart
+                        <IoCartOutline size={25} className="me-1 mt-1" />
+                        {cart.length > 0 && (
+                            <span className="absolute text-white text-xs bottom-4 left-4 h-4 w-4 bg-primary rounded-full flex items-center justify-center">
+                                {cart.length}
+                            </span>
+                        )}
                     </button>
                     <button
                         type='submit'

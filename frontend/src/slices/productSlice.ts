@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchProductById, fetchProducts } from "../thunks";
+import { addToast } from "./toastSlice";
 
 export interface IProductDetails {
     _id: string,
@@ -21,14 +22,14 @@ export interface IProductDetails {
 
 interface ProductsState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
-    error: string | null;
+    error: string;
     products: IProductDetails[],
     product: IProductDetails | null;
 }
 
 export const initialState: ProductsState = {
     status: 'idle',
-    error: null,
+    error: '',
     products: [],
     product: null
 }
@@ -41,7 +42,7 @@ const productSlice = createSlice({
         builder
             .addCase(fetchProducts.pending, (state) => {
                 state.status = 'loading';
-                state.error = null;
+                state.error = '';
             })
             .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<IProductDetails[]>) => {
                 state.products = action.payload;
@@ -49,12 +50,13 @@ const productSlice = createSlice({
             })
             .addCase(fetchProducts.rejected, (state, action: PayloadAction<any>) => {
                 state.status = 'failed';
-                state.error = action.payload;
+                state.error = action.payload.error || 'Failed to get the products.';
+                addToast({ message: state.error, type: "error" });
             })
-            
+
             .addCase(fetchProductById.pending, (state) => {
                 state.status = 'loading';
-                state.error = null;
+                state.error = '';
             })
             .addCase(fetchProductById.fulfilled, (state, action: PayloadAction<IProductDetails>) => {
                 state.product = action.payload;
@@ -62,7 +64,8 @@ const productSlice = createSlice({
             })
             .addCase(fetchProductById.rejected, (state, action: PayloadAction<any>) => {
                 state.status = 'failed';
-                state.error = action.payload;
+                state.error = action.payload.error || 'Failed to get the product details';
+                addToast({ message: state.error, type: "error" });
             });
     }
 });

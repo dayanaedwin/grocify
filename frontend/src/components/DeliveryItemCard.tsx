@@ -1,5 +1,4 @@
 
-
 interface DeliveryItemCardProps {
     product: any;
     orderStatus: string;

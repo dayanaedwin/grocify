@@ -1,6 +1,7 @@
 import { fetchCartItems, ICartItem, updateCart } from '../thunks';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
+import { addToast } from '../slices';
 
 interface CartItemsProps {
     item: ICartItem,
@@ -15,7 +16,7 @@ export const CartItem: React.FC<CartItemsProps> = ({ item }) => {
             await dispatch(updateCart({ id, quantity: updatedQuantity })).unwrap();
             await dispatch(fetchCartItems());
         } catch (error) {
-            console.error('Failed to update cart item:', error);
+            dispatch(addToast({ message: 'Failed to update the cart item', type: 'error' }));
         }
     }
 

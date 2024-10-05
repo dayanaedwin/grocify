@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { AddAddress } from "./AddAddress";
 import { CheckoutList } from "./CheckoutList";
 import { PaymentMode } from "./PaymentMode";

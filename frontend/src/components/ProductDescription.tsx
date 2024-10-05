@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from "react-redux"
-import { IProductDetails } from "../constants"
-import { Rating } from "./Rating"
-import { AppDispatch, RootState } from "../store"
-import { addToCart, fetchCartItems, updateCart } from "../thunks"
-import { Breadcrumb } from "./Breadcrumb"
-import { FiMinus, FiPlus } from "react-icons/fi"
-import { IoIosArrowForward } from "react-icons/io"
-import { Fragment, useEffect, useState } from "react"
-import { CartDrawer } from "./CartDrawer"
+import { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IoIosArrowForward } from "react-icons/io";
+import { IProductDetails } from "../constants";
+import { AppDispatch, RootState } from "../store";
+import { addToCart } from "../thunks";
+import { Rating } from "./Rating";
+import { Breadcrumb } from "./Breadcrumb";
+import { CartDrawer } from "./CartDrawer";
 
 
 interface ProductDescriptionProps {
@@ -24,10 +23,6 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = ({ product 
         await dispatch(addToCart({ productId: product._id, quantity: 1 }));
         setIsOpen(true);
     }
-
-    useEffect(() => {
-        dispatch(fetchCartItems());
-    }, []);
 
     return (
         <Fragment>
@@ -54,10 +49,10 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = ({ product 
                             <IoIosArrowForward size={18} className="ms-2 mt-1 font-bold" />
                         </button>
                     ) : (<button
-                        className='w-full bg-primary text-white font-semibold py-2 px-14 rounded border border-primary hover:bg-white hover:text-primary'
+                        className={`w-full font-semibold py-2 px-14 rounded border ${product.stock > 0 ? 'bg-primary text-white border-primary hover:bg-white hover:text-primary' : 'bg-white border-red-500 text-red-500 cursor-not-allowed'}`}
                         onClick={handleAddToCart}
                     >
-                        Add to Cart
+                        {product.stock > 0 ? 'Add' : 'Out of Stock'}
                     </button>)}
                 </div>
             </div>

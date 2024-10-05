@@ -1,5 +1,3 @@
-
-
 interface PaymentDetailsProps {
     products: any
     totalPrice: number;
