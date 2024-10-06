@@ -85,8 +85,9 @@ export const isAddressEmpty = (address: any) => {
 
 export const filterOrdersByDateRange = (orders: any[], selectedRange: number) => {
     const currentDate = new Date();
+    const key = orderDateFilter[selectedRange].name;
 
-    switch (orderDateFilter[selectedRange].name) {
+    switch (key) {
         case 'Last 30 days':
             return orders.filter(order => differenceInDays(currentDate, new Date(order.createdAt)) <= 30);
         case 'Last 3 months':

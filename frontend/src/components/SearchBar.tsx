@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AppDispatch, RootState } from '../store';
@@ -12,11 +12,12 @@ let debounceTimeout: NodeJS.Timeout;
 export const SearchBar: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const { products } = useSelector((state: RootState) => state.product);
     const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-    const [showSuggestions, setShowSuggestions] = useState(false);    
+    const [showSuggestions, setShowSuggestions] = useState(false);
     const [searchParams] = useSearchParams();
-	const searchQuery = searchParams.get('search') || '';
+    const searchQuery = searchParams.get('search') || '';
     const [input, setInput] = useState(searchQuery);
 
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -59,9 +60,19 @@ export const SearchBar: React.FC = () => {
         }
     }, [input]);
 
+    const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setShowSuggestions(false);
+        }
+    };
+
     useEffect(() => {
         dispatch(fetchProducts());
-    }, [dispatch]);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className="relative w-full max-w-md mx-auto">
@@ -76,7 +87,7 @@ export const SearchBar: React.FC = () => {
             />
             {input.trim() && <IoIosClose size={20} className='absolute right-2 top-2 cursor-pointer' onClick={() => setInput('')} />}
             {showSuggestions && filteredProducts.length > 0 && (
-                <div className="absolute w-full mt-2 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto z-10">
+                <div ref={dropdownRef} className="absolute w-full mt-2 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto z-10">
                     {filteredProducts.map((product) => (
                         <div
                             key={product.id}

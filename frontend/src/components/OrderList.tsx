@@ -58,7 +58,7 @@ export const OrderList = () => {
                                 onChange={(e) => handleSelected('dateRange', Number(e.target.value))}
                                 className="rounded-full border bg-gray-100 text-gray-500 px-2 py-1 text-xs">
                                 {orderDateFilter.map((item: IOrderDateFilter, index: number) => (
-                                    <option key={item.key} value={item.name}>{item.name}</option>
+                                    <option key={item.key} value={index}>{item.name}</option>
                                 ))}
                             </select>
                         </div>
