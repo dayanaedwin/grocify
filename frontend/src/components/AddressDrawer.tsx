@@ -59,8 +59,15 @@ export const AddressDrawer: React.FC<AddressDrawerProps> = ({ title, isOpen, onC
         if (!isValid) return;
         let addresses = (user && user.addresses) ? [...user?.addresses] : [];
 
+        if (data.isDefault) {
+            addresses = addresses.map((address, index) => ({
+                ...address,
+                isDefault: index === selectedIndex,
+            }));
+        }
+
         if (selectedIndex >= 0 && addresses[selectedIndex]) {
-            addresses[selectedIndex] = { ...addresses[selectedIndex], ...data };
+            addresses[selectedIndex] = data;
         } else {
             addresses.push(data);
         }
