@@ -21,6 +21,7 @@ const App = () => {
 					<Route path={RouteConstants.checkout} element={<Checkout />} />
 				</Route>
 			</Route>
+			<Route path="*" element={<Navigate to={RouteConstants.root} />} />
 		</Routes >
 	);
 }

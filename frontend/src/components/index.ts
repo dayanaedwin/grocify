@@ -14,6 +14,7 @@ export { Drawer } from './Drawer';
 export { FilterBar } from './FilterBar';
 export { Footer } from './Footer';
 export { Header } from './Header';
+export { MobileMenu } from './MobileMenu';
 export { Modal } from './Modal';
 export { OrderCard } from './OrderCard';
 export { OrderList } from './OrderList';

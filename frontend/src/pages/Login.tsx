@@ -45,17 +45,17 @@ export const Login = () => {
 	}
 
 	return (
-		<div className='flex min-h-screen'>
+		<div className='flex flex-col md:flex-row min-h-screen'>
 			<div className='hidden md:flex flex-1 bg-green-700 text-white justify-center items-center p-10'>
 				<div className='text-center'>
-					<h1 className='text-4xl text-white font-bold mb-2'><i>grocify</i></h1>
+					<h1 className='text-3xl md:text-4xl lg:text-5xl text-white font-bold mb-2'><i>grocify</i></h1>
 					<p className='text-md text-white mb-4'><i>Freshness on the go!</i></p>
 					<p className='text-sm'>grocify offers the best selection of fresh produce, meats, and everyday essentials. Discover more and enjoy shopping like never before!</p>
 				</div>
 			</div>
 			<div className='flex-1 flex flex-col justify-center items-center p-6 md:p-12'>
-				<h1 className='text-3xl text-primary font-bold mb-4'>Login</h1>
-				<form className='w-full max-w-sm space-y-4' onSubmit={handleSubmit(onSubmit)}>
+				<h1 className='text-2xl md:text-3xl text-primary font-bold mb-4'>Login</h1>
+				<form className='w-full max-w-xs md:max-w-sm space-y-4' onSubmit={handleSubmit(onSubmit)}>
 					<div>
 						<h1 className='text-sm text-black font-medium'>Email</h1>
 						<input
